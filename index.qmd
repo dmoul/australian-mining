@@ -1,0 +1,47 @@
+# Introduction
+
+```{r}
+#| label: setup
+#| include: false
+
+source("./scripts/setup-prepare-data.R")
+
+year_first <- min(dta_yearly_long$year, na.rm = TRUE)
+year_last <- max(dta_yearly_long$year, na.rm = TRUE)
+year_n = year_last - year_first + 1
+
+```
+
+Mining is the largest sector of the Australian economy: 14.6% as of July 2023^[<https://www.rba.gov.au/education/resources/snapshots/economy-composition-snapshot/> retrieved 2023-07-21; see also "In numbers: how mining came to be Australia’s most profitable sector" by JP Casey Published 15 March, 2021 <https://www.mining-technology.com/features/in-numbers-how-mining-came-to-be-australias-most-profitable-sector/> retrieved 2023-07-21 ].
+
+Gavin Mudd did a service for many by compiling Australian mining data spanning 223 years. It includes metals (e.g., gold), ores (e.g., iron ore), energy resources (e.g., coal), and gemstones (e.g., diamonds) and is described in *A Comprehensive dataset for Australian mine production 1799 to 2021* <https://doi.org/10.1038/s41597-023-02275-z>. The abstract:
+
+>Given that metals, minerals and energy resources extracted through mining are fundamental to human society, it follows that accurate data describing mine production are equally important. Although there are often national statistical sources, this typically includes data for metals (e.g., gold), minerals (e.g., iron ore) or energy resources (e.g., coal). No such study has ever compiled a national mine production data set which includes basic mining data such as ore processed, grades, extracted products (e.g., metals, concentrates, saleable ore) and waste rock. These data are crucial for geological assessments of mineable resources, environmental impacts, material flows (including losses during mining, smelting-refining, use and disposal or recycling) as well as facilitating more quantitative assessments of critical mineral potential (including possible extraction from tailings and/or waste rock left by mining). This data set achieves these needs for Australia, providing a world-first and comprehensive review of a national mining industry and an exemplar of what can be achieved for other countries with mining industry sectors.
+
+<br>
+
+He further notes:
+
+>The process of mining can be simplified to the following: mineral exploration finds a notable deposit of economic potential, approvals for mining are sought and obtained, the mine is built and begins operations, the deposit is eventually depleted or becomes uneconomic and the mine is closed and the site rehabilitated, and the cycle begins again.... Mining operations can be conducted through open pit or underground techniques, producing ‘ore’ which contains economic concentrations of the target metals or minerals as well as ‘waste rock’ with low to uneconomic concentrations of metals or minerals. The ore is processed to produce a saleable product such as a metal-rich concentrate (e.g., copper, nickel, lead, zinc or tin-rich concentrates), beneficiated mineral concentrate (e.g., saleable iron ore, beneficiated bauxite, washed coal) or metallic product (e.g., gold-silver doré bars, copper metal). After removal of the saleable product, the remaining minerals are called ‘tailings’ and are typically discharged to an engineered storage dam while waste rock is usually placed in large piles.
+
+And commenting on "Table 5 Cumulative Australian mine production by major time period and metal and mineral" he notes^[https://www.nature.com/articles/s41597-023-02275-z ]:
+
+>For Table [5](https://www.nature.com/articles/s41597-023-02275-z/tables/5)), the two most important observations are the increasing diversity of metals and minerals produced over time and the rapidly increasing scales of production across most commodities.
+
+<br>
+
+The paper includes specific notes on each metal/mineral, which I will not repeat here. Most mass units are dry metric tonnes: $1\  tonne = 1\ Mg = 10^6 g$ with adjustments where original data reported wet metric tons. In plots showing volumes, units are appended to the product name: tonnes (t), kg, and carets.
+
+I excluded [Platinum Group](https://en.wikipedia.org/wiki/Platinum_group) Elements (PGEs), [Rare Earth Elements](https://en.wikipedia.org/wiki/Rare-earth_element), Niobium, Bismuth, Gallium, and Vanadium due to small quantities mined, insufficient data points, ]\incomplete data series as noted by the author, or the need for more involved data preparation to present them accurately.
+
+I further subsetted the data to include only the last 100 years (1922-2021), which is the period for which I have Consumer Price Index data from the Reserve Bank of Australia and thus can convert prices and value to constant 2021 dollars.
+
+Special thanks to Jeremy Singer-Vine for mentioning this data set in his [Data is Plural](https://www.data-is-plural.com) newsletter 2023.07.12 edition
+
+And lastly, if you visit Sydney, I highly recommend the [Australian Museum](https://australian.museum/exhibition/minerals/) where (among other things) you can "be dazzled by over 1800 spectacular rocks and minerals." 
+
+<br>
+
+--Daniel
+
+<br>

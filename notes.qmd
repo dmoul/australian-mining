@@ -1,0 +1,111 @@
+# Notes
+
+```{r}
+#| label: setup
+#| include: false
+
+source("./scripts/setup-prepare-data.R")
+
+year_first <- min(dta_yearly_long$year, na.rm = TRUE)
+year_last <- max(dta_yearly_long$year, na.rm = TRUE)
+year_n = year_last - year_first + 1
+
+```
+
+## References 
+
+Mudd, G.M. A Comprehensive dataset for Australian mine production 1799 to 2021. Sci Data 10, 391 (2023). <https://doi.org/10.1038/s41597-023-02275-z>
+
+Mudd, Gavin (2023): A Comprehensive Dataset for Australian Mine Production 1799 to 2021. RMIT University figshare. Dataset. <https://doi.org/10.25439/rmt.22724081.v2>
+
+I downloaded "Aust-Mine-Prod-v01.4b-Master.xlsx" on 2023-07-20.
+
+<br>
+
+## From the "Notes" sheet
+
+The author provided the following on the "Notes" sheet
+
+Key Assumptions & Points to Note:
+
+* All sources used adopted their own quality control and can be considered reliable for the purposes of this compilation.
+* Data represents the contained metal or minerals within a saleable product leaving a mine gate (e.g., contained metal or minerals in concentrates, doré bars, direct shipping ore, refined metal, saleable ore). (Note: contained metal is not the same as payable metal, which is what a mine gets paid for after deductions by a smelter / refinery).
+* Where necessary, mineral products have been converted to show contained metal (or element / elements) (e.g., tungsten in wolfram or scheelite, individual platinum group elements).
+* All prices are indicative export prices only, based on reported metal or mineral content, presented as unit price ($/t).
+* Monetary values have been converted to Australian dollars ($), with £ multiplied by 2 to give $.
+* Every effort has been made to avoid double counting, but there may still be some data overlap.
+* All units are metric (e.g., 1 tonne is 1 million grams; g/t are grams per tonne; % is per cent; kt is thousand tonnes; Mt is mega or million tonnes); except diamonds which are in carats (where 1 carat = 0.2 grams).
+* The vast majority of data is calendar year, but from the 1980s onwards some data is financial year (i.e., July to June).
+* Where value only was reported, this has been converted to metal / mineral based on average prices for that year.
+* Whilst every effort has been made to reconcile conflicting data sources, some conflicts and inconsistencies remain - if there is a need to address this, please contact the author.
+* It is anticipated that additional updates will be included in future (e.g., years beyond 2021, additional minerals) - if there is a desire for help with particular research or analyses, the author is most willing to be consulted and may be able to help.
+* Very minor differences remain between mine production time series (e.g., mined Cu production in column BP) and totals in the Summary or Mine by Mine tabs.
+* Any errors - or even additional data to amend or add - please contact the author.
+
+and this:
+
+* Note: This synthesis does not include industrial and construction minerals and materials (e.g., aggregates, sand, barite, limestone, clays, dimension stone, etc).
+
+<br>
+
+## "Annual data" sheet
+
+I focused on the "Annual Data" sheet.
+
+To create unique column names, I appended the contents of row 8, 9, and 10. For example
+
+```
+Gold
+QLD
+kg Au
+```
+
+becomes `Gold_QLD_kg AU`.
+
+This works everywhere except the $ThO_2$ phosphate mineral `Monazite_WA_%ThO2`, which is repeated in columns 353 and 358 row 10. The first time it refers to [monazite](https://en.wikipedia.org/wiki/Monazite) but the second time to monazite in WA grouped with xenotime (both "...are sometimes grouped in the informal 'anhydrous phosphates' group") [xenotime](https://en.wikipedia.org/wiki/Xenotime). So I manually appended "xenotime" in cell MT10 to get `Monazite_WA_%ThO2_xenotime`.
+
+Although I eventually excluded these items, in order to parse the spreadsheet, I un-merged cells in row 8 and copied the relevant string to each of the merged cells:
+
+* [Placer](https://en.wikipedia.org/wiki/Placer_deposit) Platinum Group Elements (PGEs) in GW8:HA8
+* Placer [Osmiridium](https://en.wikipedia.org/wiki/Osmiridium) in HB8:HF8
+* Placer Osmiridium [sic] in HG8:HK8
+* PGEs from Nickel Sulphides in HL8:HN8
+* [Platinum Group](https://en.wikipedia.org/wiki/Platinum_group) Elements by Individual Element in HO8:HT8
+
+Data for diamonds in 2021 is missing (cells BT233, BV233, BX233). Since production has been on a downward trend since 2017, I estimated 2021 production by averaging the decline the prior two years and subtracting it from 2020 production.
+
+In the spreadsheet Ilminite in year 1932 (cell JV144) has character data rather than number in the cell, which converted to NA (missing data). "Ilmenite is the most important ore of titanium and the main source of titanium dioxide, which is used in paints, printing inks, fabrics, plastics, paper, sunscreen, food and cosmetics."^[https://en.wikipedia.org/wiki/Ilmenite ]
+
+## Other notes
+
+Another name for alumina is [aluminum oxide](https://en.wikipedia.org/wiki/Aluminium_oxide) ($Al_2O_3$)^[https://www.britannica.com/science/alumina ]. Also known as Aluminium(III) oxide. It's mostly used in the production of aluminum metal^[https://en.wikipedia.org/wiki/Aluminium_oxide ].
+
+<br>
+
+## Adjusting for inflation
+
+The Reserve Bank of Australia offers historical CPI factors for download at <https://www.rba.gov.au/inflation/measures-cpi.html>, which includes a spreadsheet at the link [Historical Series and Explanatory Notes](https://www.rba.gov.au/statistics/tables/xls/g01hist.xls?v=2023-07-22-13-19-07). I downloaded "g01hist.xls" on 2023-07-22 US time.
+
+```{r}
+cpi |>
+  filter(year <= 2021) |>
+  ggplot(aes(year, factor_2021)) +
+  geom_line() +
+  labs(
+    title = "Australian inflation adjustment to 2021 dollars",
+    subtitle = "1 = 2021; calculated from the Consumer Price Index (CPI)",
+    x = NULL,
+    y = "CPI factor",
+    caption = "Data: Reserve Bank of Australia. Analysis: Daniel Moul"
+  )
+
+```
+
+<br>
+
+## Coal exports
+
+According to Geosciences Australia, a government agency, Japan is the the destination of more Australian coal then any other country, followed by China (assuming post-COVID-19 industrial activity returns to trend), then India, South Korea, and Taiwan. See Figure 9^[
+<https://www.ga.gov.au/digital-publication/aecr2022/coal> ].
+
+<br>

@@ -1,0 +1,141 @@
+# Yearly prices
+
+There is great variation in commodity prices over time and among the metals/minerals.
+
+<br>
+
+```{r}
+#| label: setup
+#| include: false
+#| warning: false
+
+source("./scripts/setup-prepare-data.R")
+# creates dta_yearly_long
+# creates cpi
+
+year_first <- min(dta_yearly_long$year)
+year_last <- max(dta_yearly_long$year)
+year_n = year_last - year_first + 1
+
+peak_production_cutoff <- 0.9 # at least this much of amount_max to be considered peak
+peak_price_cutoff <- 0.9 # at least this much of amount_max to be considered peak
+
+```
+
+A lot of metals/minerals experienced very high nominal price rises since 2000.
+
+```{r, fig.height=10, fig.width=14}
+#| label: fig-prices-over-time
+#| fig-cap: "Prices over time"
+#| fig-width: 14
+#| fig-height: 10
+#| column: screen-inset-right
+
+product_levels <-dta_yearly_long |>
+  filter(!is.na(price)) |>
+  slice_max(order_by = price, n = 1,
+            by = product_price) |>
+  arrange(desc(price)) |>
+  pull(product_price)
+
+dta_yearly_long |>
+  mutate(product_price = factor(product_price, levels = product_levels)) |>
+  ggplot(aes(year, price, color = product_price)) +
+  geom_line(na.rm = TRUE, show.legend = FALSE) +
+  scale_x_continuous(breaks = c(1850, 1900, 1950, 2000)) +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale(),
+                                           prefix = "$"),
+  ) +
+  facet_wrap(~ product_price, scales = "free_y") +
+  labs(
+    title = glue("Australian mining prices"),
+    subtitle = "Highest to lowest prices",
+    x = NULL,
+    y = "AUD (nominal) Y axis scale varies",
+    caption = my_caption
+  )
+
+```
+
+<br>
+
+But after adjusting for inflation (using constant 2021 dollars) we can see that commodity prices generally are not near their peak, and some prices have been in long-term decline (Cobalt, Tungsten, Lead, Zinc, Alumina, Phosphate rock, and Bauxite).
+
+Thus all plots starting with this one use constant 2021 dollars.
+
+```{r, fig.height=10, fig.width=14}
+#| label: fig-prices-over-time-2021-dollars
+#| fig-cap: "Prices over time in 2021 dollars"
+#| fig-width: 14
+#| fig-height: 10
+#| column: screen-inset-right
+
+product_levels <- dta_yearly_long |>
+  filter(!is.na(price_2021)) |>
+  slice_max(order_by = price_2021, n = 1,
+            by = product_price) |>
+  arrange(desc(price_2021)) |>
+  pull(product_price)
+
+dta_yearly_long |>
+  mutate(product_price = factor(product_price, levels = product_levels)) |>
+  
+  ggplot(aes(year, price_2021, color = product_price)) +
+  geom_line(na.rm = TRUE, show.legend = FALSE) +
+  scale_x_continuous(breaks = c(1850, 1900, 1950, 2000)) +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale(),
+                                           prefix = "$"),
+  ) +
+  facet_wrap(~ product_price, scales = "free_y") +
+  labs(
+    title = glue("Australian mining prices (2021 dollars)"),
+    subtitle = "Highest to lowest volumne",
+    x = NULL,
+    y = "AUD (2021 dollars) Y axis scale varies",
+    caption = my_caption
+  )
+
+```
+
+<br>
+
+Price by volume: does volume go up when prices go up (mine owners are incented to mine more)? Or do prices go down when volume goes up (there is a surplus leading to lower prices)? The answer is mixed. Yes, for some (Gold, Lithium, Chromium, Iron ore, Coal) but not others (Uranium, Vanadium, Bauxite).
+
+```{r, fig.height=10, fig.width=14}
+#| label: fig-price-by-volume-2021-dollars
+#| fig-cap: "Price by volume in 2021 dollars"
+#| fig-width: 14
+#| fig-height: 10
+#| column: screen-inset-right
+#| warning: false
+
+product_levels <- dta_yearly_long |>
+  filter(!is.na(price_2021)) |>
+  slice_max(order_by = price_2021, n = 1,
+            by = product_name) |>
+  arrange(desc(price_2021)) |>
+  pull(product_name)
+
+dta_yearly_long |>
+  filter(!is.na(price)) |>
+  mutate(product_name = factor(product_name, levels = product_levels)) |>
+  ggplot(aes(volume, price_2021, color = year)) +
+  geom_point(na.rm = TRUE, size = 0.5, show.legend = TRUE) +
+  geom_smooth(se = FALSE, method = 'loess', formula = 'y ~ x', 
+              na.rm = TRUE, linewidth = 0.5, color = "firebrick") + 
+  scale_x_log10(labels = label_number(scale_cut = cut_short_scale())) +
+  scale_y_log10(labels = label_number(scale_cut = cut_short_scale(),
+                                           prefix = "$")) +
+  facet_wrap(~ product_name, scales = "free") +
+  theme(legend.position = "top") +
+  labs(
+    title = glue("Australian mining prices by volume (2021 dollars)"),
+    subtitle = "Highest to lowest prices",
+    x = "Yearly volume X axis scale varies (log10 scale)",
+    y = "Price AUD (2021 dollars) Y axis scale varies (log10 scale)",
+    caption = my_caption
+  )
+
+```
+
+<br>

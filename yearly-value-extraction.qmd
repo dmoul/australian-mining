@@ -1,0 +1,169 @@
+# Yearly value
+
+There is great variation in the value of the commodities produced over the years and among the minerals/metals. These dynamics are the focus of this chapter.
+
+Value is $price \times quantity$.
+
+```{r}
+#| label: setup
+#| include: false
+#| warning: false
+
+source("./scripts/setup-prepare-data.R")
+# creates dta_yearly_long
+# creates cpi
+
+year_first <- min(dta_yearly_long$year)
+year_last <- max(dta_yearly_long$year)
+year_n = year_last - year_first + 1
+
+peak_production_cutoff <- 0.9 # at least this much of amount_max to be considered peak
+peak_price_cutoff <- 0.9 # at least this much of amount_max to be considered peak
+
+```
+
+## Contributions in 2021 to total value
+
+Using log scale since the range is very wide.
+
+```{r, fig.height=7, fig.width=12}
+#| label: fig-value-2021
+#| fig-cap: "Value extracted in 2021"
+#| fig-width: 12
+#| fig-height: 7
+#| column: page-inset-right
+
+product_levels <- dta_yearly_long |>
+  filter(year == 2021,
+         !is.na(value_2021)) |>
+  slice_max(order_by = value_2021, n = 1,
+            by = product_name) |>
+  arrange(value_2021)
+
+p1 <- dta_yearly_long |>
+  filter(year == 2021) |>
+  inner_join(product_levels |> select(product_name),
+             by = "product_name") |>
+  mutate(product_name = factor(product_name, levels = product_levels$product_name)) |>
+  ggplot(aes(year, value_2021, label = product_name, color = product_name)) +
+  geom_label_repel(na.rm = TRUE, show.legend = FALSE,
+                   direction = "x", min.segment.length = 100) +
+  scale_x_continuous(breaks = c(1900, 1950, 2000)) +
+  scale_y_log10(labels = label_number(scale_cut = cut_short_scale(),
+                                           prefix = "$"),
+  ) +
+  labs(
+    subtitle = glue("Relative commodity value"),
+    x = NULL,
+    y = "AUD (log10 scale)"
+  )
+
+data_for_plot <- dta_yearly_long |>
+  filter(year == 2021) |>
+  inner_join(product_levels |> select(product_name),
+             by = "product_name") |>
+  arrange(desc(value_2021)) |>
+  mutate(product_name = factor(product_name, levels = product_levels$product_name),
+         cum_value = cumsum(value_2021))
+
+max_cum_value = max(data_for_plot$cum_value)
+  
+p2 <- data_for_plot |>
+  ggplot(aes(cum_value, product_name)) +
+  #geom_path(aes(group = cum_value), alpha = 0.4, color = carolina_blue) +
+  geom_point() +
+  scale_x_continuous(labels = label_number(scale_cut = cut_short_scale()),
+                     sec.axis = sec_axis(~ . / max_cum_value,
+                                         labels = label_percent(accuracy = 1))) +
+  expand_limits(x = 0) +
+  labs(
+    subtitle = glue("Commodity contribution to total value (AUD {round(max_cum_value / 1e9, digits = 0)}B)"),
+    x = "Cumulative value (AUD)",
+    y = NULL
+  )
+
+p1 + p2 +
+  plot_annotation(
+    title = 'Australian mining value of products in 2021',
+    caption = my_caption
+  )
+
+```
+
+<br>
+
+Trend for each commodity sorted from greatest to least peak value (units vary).
+
+```{r, fig.height=10, fig.width=14}
+#| label: fig-value-over-time-2021-dollars
+#| fig-cap: "Value over time in 2021 dollars"
+#| fig-width: 14
+#| fig-height: 10
+#| column: screen-inset-right
+
+product_levels <- dta_yearly_long |>
+  filter(!is.na(value_2021)) |>
+  slice_max(order_by = value_2021, n = 1,
+            by = product_name) |>
+  arrange(desc(value_2021)) |>
+  pull(product_name)
+
+dta_yearly_long |>
+  mutate(product_name = factor(product_name, levels = product_levels)) |>
+  ggplot(aes(year, value_2021, color = product_name)) +
+  geom_line(na.rm = TRUE, show.legend = FALSE) +
+  scale_x_continuous(breaks = c(1900, 1950, 2000)) +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale(),
+                                           prefix = "$"),
+  ) +
+  facet_wrap(~ product_name, scales = "free_y") +
+  labs(
+    title = glue("Australian mining value of products (2021 dollars)"),
+    subtitle = glue("Highest to lowest peak values. {year_first}-{year_last}"),
+    x = NULL,
+    y = "AUD (2021 dollars) Y axis scale varies",
+    caption = my_caption
+  )
+
+```
+
+<br>
+
+```{r}
+#| label: fig-value-yearly-grouped-by-scale
+#| fig-cap: "Yearly Australian mining value extracted"
+#| eval: false
+
+walk(n_groups:1, plot_group_value)
+walk(n_groups:1, plot_group_value_2021)
+
+```
+
+<br>
+
+## Table
+
+```{r}
+#| label: tbl-summary-value-2021
+#| tbl-cap: "Australian mining value extracted in 2021"
+
+dta_yearly_long |>
+  filter(year == 2021) |> 
+  select(product_name, units_price, value_2021, value_max_2021) |>
+  mutate(value_pct_of_max = value_2021 / value_max_2021) |>
+  arrange(desc(value_2021), desc(value_pct_of_max)) |>
+  mutate(rowid = row_number()) |>
+  gt() |>
+  tab_header(md("**Australian mining value extracted 2021**<br>*Australian dollars (AUD)*")) |>
+  fmt_currency(columns = c(value_2021, value_max_2021),
+             decimals = 0,
+             currency = "AUD",
+             suffixing = TRUE) |>
+  fmt_percent(columns = value_pct_of_max,
+             decimals = 0) |>
+  sub_missing() |>
+  tab_source_note(md("*Data: Gavin Mudd. Analysis: Daniel Moul*"))
+
+```
+
+<br>

@@ -1,0 +1,34 @@
+project:
+  type: book
+  output-dir: "_book"
+
+book:
+  title: "Australian Mining"
+  subtitle: "Add subtitle here"
+  author: "Daniel Moul"
+  date: now
+  #site-url: ""
+  chapters: 
+    - index.qmd
+    - yearly-output.qmd
+    - yearly-prices.qmd
+    - yearly-value-extraction.qmd
+    - notes.qmd
+
+execute:
+  freeze: false # re-calculate and re-render only when source changes
+
+format:
+  html:
+    code-fold: true
+    number-sections: true
+    code-summary: "Show the code"
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    title-block-banner: true  
+
+    
+
+
+
