@@ -22,7 +22,6 @@ peak_price_cutoff <- 0.9 # at least this much of amount_max to be considered pea
 
 ```
 
-
 # Prices by commodity: nominal and constant 2021 dollars
 
 Since 2000, very high nominal price rises occurred for many commodities.
@@ -62,7 +61,7 @@ dta_yearly_long |>
 
 <br>
 
-But after adjusting for inflation (using constant 2021 dollars) we can see that commodity prices generally are not near their peak, and some prices have been in long-term decline (Cobalt, Tungsten, Lead, Zinc, Alumina, Phosphate rock, and Bauxite).
+But after adjusting for inflation (using constant 2021 dollars) we can see that commodity prices generally are not near their peak, and some prices have been in long-term decline (Tungsten, Alumina, and Bauxite).
 
 ::: {.callout-note}
 For this reason, all plots starting with this one use constant 2021 dollars.
@@ -104,9 +103,9 @@ dta_yearly_long |>
 
 <br>
 
-## Price by volume
+## Price by production volume
 
-Does volume go up when prices go up (mine owners are more motivated to produce more)? Or do prices go down when volume goes up (perhaps demand is satisfied, leading to lower prices)? The answer appears to be mixed. For some (Gold, Lithium, Chromium, Iron ore) demand and volume have been positively correlated in recent years. Some are negatively correlated (Uranium, Bauxite).
+Does production volume go up when prices go up (mine owners are more motivated to produce more, or it becomes economical to mine previously marginal deposits)? Or do prices go down when volume goes up (perhaps demand is satisfied, leading to lower prices)? The answer appears to be mixed. For some (Gold, Lithium, Chromium, Iron ore) demand and production volume have been positively correlated in recent years. Some are negatively correlated (Uranium, Bauxite).
 
 ```{r, fig.height=10, fig.width=14}
 #| label: fig-price-by-volume-2021-dollars
@@ -126,7 +125,7 @@ product_levels <- dta_yearly_long |>
 dta_yearly_long |>
   filter(!is.na(price)) |>
   mutate(product_name = factor(product_name, levels = product_levels)) |>
-  ggplot(aes(volume, price_2021, color = year)) +
+  ggplot(aes(mass, price_2021, color = year)) +
   geom_point(na.rm = TRUE, size = 0.5, show.legend = TRUE) +
   geom_smooth(se = FALSE, method = 'loess', formula = 'y ~ x', 
               na.rm = TRUE, linewidth = 0.5, color = "firebrick") + 
@@ -136,9 +135,9 @@ dta_yearly_long |>
   facet_wrap(~ product_name, scales = "free") +
   theme(legend.position = "top") +
   labs(
-    title = glue("Australian mining prices by volume (2021 dollars)"),
+    title = glue("Australian mining prices by production volume (2021 dollars)"),
     subtitle = "Highest to lowest prices",
-    x = "Yearly volume X axis scale varies (log10 scale)",
+    x = "Yearly production volume X axis scale varies (log10 scale)",
     y = "Price AUD (2021 dollars) Y axis scale varies (log10 scale)",
     caption = my_caption
   )

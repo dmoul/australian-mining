@@ -14,13 +14,20 @@ year_n = year_last - year_first + 1
 
 Mining is the largest sector of the Australian economy: 14.6% as of July 2023^[<https://www.rba.gov.au/education/resources/snapshots/economy-composition-snapshot/> retrieved 2023-07-21; see also "In numbers: how mining came to be Australia’s most profitable sector" by JP Casey Published 15 March, 2021 <https://www.mining-technology.com/features/in-numbers-how-mining-came-to-be-australias-most-profitable-sector/> retrieved 2023-07-21 ]. In these pages I explore Australian mining output using data compiled by Gavin Mudd and described in *A Comprehensive dataset for Australian mine production 1799 to 2021* <https://doi.org/10.1038/s41597-023-02275-z>. The data includes metals (e.g., gold, silver), ores (e.g., bauxite, iron ore), energy resources (coal), and gemstones (e.g., diamonds).
 
-The top three commodities by mass in 2021 were iron ore, coal, and bauxite, together making up about 97% of 2021 production (@fig-amount-2021). In terms of value, the top three were iron ore, coal, and gold with a combined value of about 88% of the total value of production (@fig-value-2021).
+I wanted to know:
+
+* What are the primary commodities mined in Australia (by amount and by value)
+* Which commodities are at or near peak production? Peak production value?
+* How volatile have prices been over the last 100 years in constant dollars?
+* What is the range of prices of these commodities?
+
+To answer the first question here: The top three commodities by mass in 2021 were iron ore, coal, and bauxite, together making up about 97% of 2021 production (@fig-amount-2021, @tbl-summary-mass-2021). In terms of value, the top three were iron ore, coal, and gold with a combined value of about 88% of the total value of production (@fig-value-2021, @tbl-summary-value-2021).
 
 Commenting on "Table 5 Cumulative Australian mine production by major time period and metal and mineral", Mudd notes^[https://www.nature.com/articles/s41597-023-02275-z ]:
 
 >For Table [5](https://www.nature.com/articles/s41597-023-02275-z/tables/5)), the two most important observations are the increasing diversity of metals and minerals produced over time and the rapidly increasing scales of production across most commodities.
 
-The paper includes specific notes on each metal/mineral, which I will not repeat here. Most mass units are dry metric tonnes: $1\ tonne = 1\ Mg = 10^6 g$ with adjustments where original data reported wet metric tons. In plots showing amounts, units are appended to the product name: tonnes (t), kg, and carets.
+The paper includes specific notes on each commodity, which I will not repeat here. Most amounts are expressed in the mass unit dry metric tonnes: $1\ tonne = 1\ Mg = 10^6 g$. In plots showing amounts, units are appended to the product name: tonnes (t), kg, and carets.
 
 <br>
 
@@ -31,6 +38,7 @@ While Mudd provided 223 years of data, I use only the most recent 100 years (192
 I did not attempt to reconcile numbers in this analysis with data published elsewhere. They are unlikely to match for the following reasons:
 
 * I have not distinguished among the amounts *mined*, *produced* (which may include imports beneficieated or otherwise processed in Australia), and *exported* (some output is consumed domestically).
+* Rather than using CPI, one could choose other measures of inflation more centered on mining or manufacturing. I chose CPI, because it's the measure for which the RBA provides 100 years of data. It's also the most common and familiar measure.
 * I excluded [Platinum Group](https://en.wikipedia.org/wiki/Platinum_group) Elements (PGEs), [Rare Earth Elements](https://en.wikipedia.org/wiki/Rare-earth_element), Niobium, Bismuth, Gallium, and Vanadium due to small quantities mined, insufficient data points, incomplete data series as noted by the author, or the need for more involved data preparation to present them accurately.
 * Mudd made some generalizing assumptions documented in *A Comprehensive dataset for Australian mine production 1799 to 2021* and in the master spreadsheet; see [From the Notes sheet]
 

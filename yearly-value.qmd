@@ -151,17 +151,17 @@ data_for_plot <- dta_yearly_long |>
              by = "product_price")
 
 labels_for_plot <- data_for_plot |>
-  filter(!is.na(volume)) |>
+  filter(!is.na(mass)) |>
   mutate(final_year = max(year),
          .by = product_price) |>
   filter(year == max(year),
          .by = product_price)
   
 data_for_plot |>
-  ggplot(aes(year, volume, color = product_price, group = product_price)) +
+  ggplot(aes(year, mass, color = product_price, group = product_price)) +
   geom_line(na.rm = TRUE, show.legend = FALSE) +
   geom_text_repel(data = labels_for_plot,
-                  aes(max(year) + 30, volume, label = product_price),
+                  aes(max(year) + 30, mass, label = product_price),
                   hjust = 1, vjust = 0.5, show.legend = FALSE, 
                   direction = "y", force = 0.4) +
   scale_x_continuous(breaks = c(1850, 1900, 1950, 2000)) +

@@ -87,23 +87,15 @@ cpi |>
   filter(year <= 2021) |>
   ggplot(aes(year, factor_2021)) +
   geom_line() +
+  scale_y_continuous(trans = "log10") +
   labs(
     title = "Australian inflation adjustment to 2021 dollars",
     subtitle = "1 = 2021; calculated from the Consumer Price Index (CPI)",
     x = NULL,
-    y = "CPI factor",
+    y = "CPI factor (log10 scale)",
     caption = "Data: Reserve Bank of Australia. Analysis: Daniel Moul"
   )
 
 ```
-
-<br>
-
-## Other notes
-
-Another name for alumina is [aluminium oxide](https://en.wikipedia.org/wiki/Aluminium_oxide) ($Al_2O_3$)^[https://www.britannica.com/science/alumina ]. Also known as Aluminium(III) oxide. It's mostly used in the production of aluminum metal^[https://en.wikipedia.org/wiki/Aluminium_oxide ]. In North American English aluminium is aluminum.
-
-According to Geosciences Australia, a government agency, Japan is the the destination of more Australian coal then any other country, followed by China (assuming post-COVID-19 industrial activity returns to trend), then India, South Korea, and Taiwan. See Figure 9^[
-<https://www.ga.gov.au/digital-publication/aecr2022/coal> ].
 
 <br>

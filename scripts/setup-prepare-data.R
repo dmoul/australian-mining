@@ -98,16 +98,16 @@ if(!file.exists(fname_prepared_data)) {
 
 ###### data prep ######
 
-dta_yearly_volume_value <- dta_yearly_all_columns |>
+dta_yearly_mass_value <- dta_yearly_all_columns |>
   select(year, contains("Australia") & !contains(r"(%)") & !contains(c("Placer", "PGE", "Platinum Group", "Rare Earths", "Bismuth",
                                                                        "Gallium", "Vanadium", "Niobium"))) |>
   mutate(across(everything(), as.double)) # convert errant strings to NA (creates warning message: NAs introduced by coercion)
 # TODO figure out why some column names aren't following the main pattern; for now those ores will be removed in the next step)
 # TODO add back in contains(c("Placer", "PGE", "Platinum Group", "Rare Earths")
 
-xx_colnames <- tibble(xx = colnames(dta_yearly_volume_value))
+xx_colnames <- tibble(xx = colnames(dta_yearly_mass_value))
 
-my_colnames <- str_replace_all(colnames(dta_yearly_volume_value), 
+my_colnames <- str_replace_all(colnames(dta_yearly_mass_value), 
                                c("Black Coal" = "Black-Coal", 
                                  "raw coal" = "raw-coal",
                                  "Iron Ore" = "Iron-ore",
@@ -118,16 +118,16 @@ my_colnames <- str_replace_all(colnames(dta_yearly_volume_value),
                                  " .*" = "") 
 )
 
-names(dta_yearly_volume_value) <- my_colnames
+names(dta_yearly_mass_value) <- my_colnames
 
-dta_yearly_volume_value_long <- dta_yearly_volume_value |>
+dta_yearly_mass_value_long <- dta_yearly_mass_value |>
   pivot_longer(cols = contains("_"),
                names_to = "product",
                values_to = "amount") |>
   #filter(!product %in% c("Niobium_t", "Bismuth_t")) |> # too little mined to report it
   mutate(
     my_units = str_extract(product, "(?<=_).+$"),
-    type = if_else(str_detect(my_units, "[$]"), "price", "volume"),
+    type = if_else(str_detect(my_units, "[$]"), "price", "mass"),
     product_name = str_extract(product, "^([[:alpha:]][-]?)+"),
   ) |>
   mutate(amount_max = max(amount, na.rm = TRUE),
@@ -140,12 +140,12 @@ dta_yearly_volume_value_long <- dta_yearly_volume_value |>
          .by = type
   )
 
-dta_yearly_long <- dta_yearly_volume_value_long |>
+dta_yearly_long <- dta_yearly_mass_value_long |>
   group_by(year, product_name) |>
-  mutate(product_volume = lag(product, n = 1, default = NA),
-         volume = lag(amount, n = 1, default = NA),
-         units_volume = lag(my_units, n = 1, default = NA),
-         group_volume = lag(group, n = 1, default = NA)
+  mutate(product_mass = lag(product, n = 1, default = NA),
+         mass = lag(amount, n = 1, default = NA),
+         units_mass = lag(my_units, n = 1, default = NA),
+         group_mass = lag(group, n = 1, default = NA)
          ) |>
   ungroup() |>
   filter(type == "price") |>
@@ -154,9 +154,9 @@ dta_yearly_long <- dta_yearly_volume_value_long |>
          units_price = my_units,
          group_price = group,
          product_price = product) |>
-  mutate(value = price * volume) |>
-  mutate(volume_max = max(volume, na.rm = TRUE),
-         volume_pct_of_max = volume / volume_max,
+  mutate(value = price * mass) |>
+  mutate(mass_max = max(mass, na.rm = TRUE),
+         mass_pct_of_max = mass / mass_max,
          value_max = max(value, na.rm = TRUE),
          .by = c(product_name)) |>
   inner_join(cpi |> select(year, factor_2021),
@@ -180,5 +180,5 @@ dta_yearly_long <- dta_yearly_volume_value_long |>
                                        #include.lowest = TRUE,
                                        ordered_result = TRUE,
                                        labels = FALSE)) |>
-  select(year, product_name, contains("price"), contains("volume"), contains("value"))
+  select(year, product_name, contains("price"), contains("mass"), contains("value"))
 
