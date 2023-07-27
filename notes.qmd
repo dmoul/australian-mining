@@ -22,7 +22,7 @@ I downloaded "Aust-Mine-Prod-v01.4b-Master.xlsx" on 2023-07-20.
 
 <br>
 
-## From the Notes sheet
+## From the Notes sheet {#sec-notes-sheet}
 
 The author provided the following on the "Notes" sheet
 

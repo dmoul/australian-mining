@@ -39,8 +39,8 @@ I did not attempt to reconcile numbers in this analysis with data published else
 
 * I have not distinguished among the amounts *mined*, *produced* (which may include imports beneficieated or otherwise processed in Australia), and *exported* (some output is consumed domestically).
 * Rather than using CPI, one could choose other measures of inflation more centered on mining or manufacturing. I chose CPI, because it's the measure for which the RBA provides 100 years of data. It's also the most common and familiar measure.
-* I excluded [Platinum Group](https://en.wikipedia.org/wiki/Platinum_group) Elements (PGEs), [Rare Earth Elements](https://en.wikipedia.org/wiki/Rare-earth_element), Niobium, Bismuth, Gallium, and Vanadium due to small quantities mined, insufficient data points, incomplete data series as noted by the author, or the need for more involved data preparation to present them accurately.
-* Mudd made some generalizing assumptions documented in *A Comprehensive dataset for Australian mine production 1799 to 2021* and in the master spreadsheet; see [From the Notes sheet]
+* Percentages won't match, since I excluded [Platinum Group](https://en.wikipedia.org/wiki/Platinum_group) Elements (PGEs), [Rare Earth Elements](https://en.wikipedia.org/wiki/Rare-earth_element), Niobium, Bismuth, Gallium, and Vanadium due to small quantities mined, insufficient data points, incomplete data series as noted by the author, or the need for more involved data preparation to present them accurately.
+* Mudd made some generalizing assumptions documented in *A Comprehensive dataset for Australian mine production 1799 to 2021* and in the master spreadsheet, including converting most commodity prices from USD to AUD at the rate $AUD\ 2 = USD\ 1$, since most commodities are priced in USD^[https://www.dmp.wa.gov.au/About-Us-Careers/Latest-Statistics-Release-4081.aspx ]. See @sec-notes-sheet in the Notes.
 
 If any numbers seem wildly erroneous, please let me know.
 
