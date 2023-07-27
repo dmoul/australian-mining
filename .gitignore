@@ -35,6 +35,9 @@ Temporary Items
 # Generated output
 /_book/
 
+# misc notes
+/not-pushed-to-github/
+
 ### R ###
 
 # Quarto generated cache etc
