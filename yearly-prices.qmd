@@ -1,6 +1,6 @@
 # Yearly prices
 
-There is great variation in commodity prices over time and among the metals/minerals.
+There is great variation in commodity prices over time and among the commodities. These dynamics are the focus of this chapter. 
 
 <br>
 
@@ -22,7 +22,10 @@ peak_price_cutoff <- 0.9 # at least this much of amount_max to be considered pea
 
 ```
 
-A lot of metals/minerals experienced very high nominal price rises since 2000.
+
+# Prices by commodity: nominal and constant 2021 dollars
+
+Since 2000, very high nominal price rises occurred for many commodities.
 
 ```{r, fig.height=10, fig.width=14}
 #| label: fig-prices-over-time
@@ -61,7 +64,9 @@ dta_yearly_long |>
 
 But after adjusting for inflation (using constant 2021 dollars) we can see that commodity prices generally are not near their peak, and some prices have been in long-term decline (Cobalt, Tungsten, Lead, Zinc, Alumina, Phosphate rock, and Bauxite).
 
-Thus all plots starting with this one use constant 2021 dollars.
+::: {.callout-note}
+For this reason, all plots starting with this one use constant 2021 dollars.
+:::
 
 ```{r, fig.height=10, fig.width=14}
 #| label: fig-prices-over-time-2021-dollars
@@ -99,7 +104,9 @@ dta_yearly_long |>
 
 <br>
 
-Price by volume: does volume go up when prices go up (mine owners are incented to mine more)? Or do prices go down when volume goes up (there is a surplus leading to lower prices)? The answer is mixed. Yes, for some (Gold, Lithium, Chromium, Iron ore, Coal) but not others (Uranium, Vanadium, Bauxite).
+## Price by volume
+
+Does volume go up when prices go up (mine owners are more motivated to produce more)? Or do prices go down when volume goes up (perhaps demand is satisfied, leading to lower prices)? The answer appears to be mixed. For some (Gold, Lithium, Chromium, Iron ore) demand and volume have been positively correlated in recent years. Some are negatively correlated (Uranium, Bauxite).
 
 ```{r, fig.height=10, fig.width=14}
 #| label: fig-price-by-volume-2021-dollars

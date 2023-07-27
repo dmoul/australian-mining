@@ -22,6 +22,8 @@ peak_price_cutoff <- 0.9 # at least this much of amount_max to be considered pea
 
 ```
 
+<br>
+
 ## Contributions in 2021 to total value
 
 Using log scale since the range is very wide.
@@ -92,7 +94,7 @@ p1 + p2 +
 
 <br>
 
-Trend for each commodity sorted from greatest to least peak value (units vary).
+## Value over time by commodity
 
 ```{r, fig.height=10, fig.width=14}
 #| label: fig-value-over-time-2021-dollars
@@ -119,7 +121,7 @@ dta_yearly_long |>
   facet_wrap(~ product_name, scales = "free_y") +
   labs(
     title = glue("Australian mining value of products (2021 dollars)"),
-    subtitle = glue("Highest to lowest peak values. {year_first}-{year_last}"),
+    subtitle = glue("Arranged from highest to lowest peak value. {year_first}-{year_last}"),
     x = NULL,
     y = "AUD (2021 dollars) Y axis scale varies",
     caption = my_caption
@@ -129,14 +131,51 @@ dta_yearly_long |>
 
 <br>
 
+## Commodities at or near peak value of production
+
+For the following, the value of production in 2021 was in the top `r percent(1 - peak_production_cutoff)` of historical peak value Since the scale of the value is so wide, I use a log scale on the Y axis.
+
+Some observations:
+
+* ***TODO: Add here***
+
 ```{r}
-#| label: fig-value-yearly-grouped-by-scale
-#| fig-cap: "Yearly Australian mining value extracted"
-#| eval: false
+#| label: fig-output-yearly-at-peak
+#| fig-cap: "Products at or near peak production: yearly Australian mining output"
 
-walk(n_groups:1, plot_group_value)
-walk(n_groups:1, plot_group_value_2021)
+peak_products <- dta_yearly_long |>
+  filter(year == max(year, na.rm = TRUE) & value_2021_pct_of_max >= peak_production_cutoff) 
 
+data_for_plot <- dta_yearly_long |>
+  inner_join(peak_products %>% select(product_price),
+             by = "product_price")
+
+labels_for_plot <- data_for_plot |>
+  filter(!is.na(volume)) |>
+  mutate(final_year = max(year),
+         .by = product_price) |>
+  filter(year == max(year),
+         .by = product_price)
+  
+data_for_plot |>
+  ggplot(aes(year, volume, color = product_price, group = product_price)) +
+  geom_line(na.rm = TRUE, show.legend = FALSE) +
+  geom_text_repel(data = labels_for_plot,
+                  aes(max(year) + 30, volume, label = product_price),
+                  hjust = 1, vjust = 0.5, show.legend = FALSE, 
+                  direction = "y", force = 0.4) +
+  scale_x_continuous(breaks = c(1850, 1900, 1950, 2000)) +
+  scale_y_log10(labels = label_number(scale_cut = cut_short_scale(),
+                                      prefix = "$"),
+  ) +
+  labs(
+    title = glue("Production near peak value in Australia"),
+    subtitle = glue("{year_first}-{year_last}"),
+    x = NULL,
+    y = "AUD (2021 dollars) log10 scale",
+    caption = my_caption
+  )
+  
 ```
 
 <br>
@@ -152,14 +191,15 @@ dta_yearly_long |>
   select(product_name, units_price, value_2021, value_max_2021) |>
   mutate(value_pct_of_max = value_2021 / value_max_2021) |>
   arrange(desc(value_2021), desc(value_pct_of_max)) |>
-  mutate(rowid = row_number()) |>
+  mutate(cum_pct = cumsum(value_2021 / sum(value_2021, na.rm = TRUE)),
+         rowid = row_number()) |>
   gt() |>
   tab_header(md("**Australian mining value extracted 2021**<br>*Australian dollars (AUD)*")) |>
   fmt_currency(columns = c(value_2021, value_max_2021),
              decimals = 0,
              currency = "AUD",
              suffixing = TRUE) |>
-  fmt_percent(columns = value_pct_of_max,
+  fmt_percent(columns = c(value_pct_of_max, cum_pct),
              decimals = 0) |>
   sub_missing() |>
   tab_source_note(md("*Data: Gavin Mudd. Analysis: Daniel Moul*"))

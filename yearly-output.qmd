@@ -18,33 +18,35 @@ peak_price_cutoff <- 0.9 # at least this much of amount_max to be considered pea
 
 ```
 
-There is great variation in the amount of commodity production both over time and among the commodities. These dynamics are the focus of this chapter. Most amounts are in metric tonnes. Gold, silver, and diamonds are in kg.
+There is great variation in the amount of commodity production both over time and among the commodities. These dynamics are the focus of this chapter. Most amounts are metric tonnes. Gold and silver are measured in kg, and diamonds are measured in carets.
 
-## Contributions in 2021 to total volume extracted
+<br>
 
-In @fig-volume-2021 I use a log scale on the left plot, since the range is very wide.
+## Contributions in 2021 to total amount extracted
+
+In @fig-amount-2021 I use a log scale on the left plot, since the range is very wide.
 
 ```{r, fig.height=7, fig.width=7}
-#| label: fig-volume-2021
-#| fig-cap: "Volume extracted in 2021"
-#| fig-width: 12
+#| label: fig-amount-2021
+#| fig-cap: "Amount extracted in 2021"
+#| fig-width: 7
 #| fig-height: 7
-#| column: page-inset-right
+
+##| column: page-inset-right
 
 product_levels <- dta_yearly_long |>
   filter(year == 2021,
          !is.na(volume)) |>
   slice_max(order_by = volume, n = 1,
-            by = product_name) |>
+            by = product_volume) |>
   arrange(volume)
 
-# TODO: tweak geom_label_repel() so that all commoditites display.
-p1 <- dta_yearly_long |>
+dta_yearly_long |>
   filter(year == 2021) |>
-  inner_join(product_levels |> select(product_name),
-             by = "product_name") |>
-  mutate(product_name = factor(product_name, levels = product_levels$product_name)) |>
-  ggplot(aes(year, volume, label = product_name, color = product_name)) +
+  inner_join(product_levels |> select(product_volume),
+             by = "product_volume") |>
+  mutate(product_volume = factor(product_volume, levels = product_levels$product_volume)) |>
+  ggplot(aes(year, volume, label = product_volume, color = product_volume)) +
   geom_label_repel(na.rm = TRUE, show.legend = FALSE,
                    direction = "x", min.segment.length = 10000,
                    max.overlaps = 10, max.iter = 10000) +
@@ -52,85 +54,108 @@ p1 <- dta_yearly_long |>
   scale_y_log10(labels = label_number(scale_cut = cut_short_scale()),
   ) +
   labs(
-    subtitle = glue("Relative commodity amount"),
+    title = 'Australian mine output in 2021',
+    #subtitle = glue("Relative commodity amount"),
     x = NULL,
-    y = "Amount (log10 scale)"
-  )
-
-data_for_plot <- dta_yearly_long |>
-  filter(year == 2021) |>
-  inner_join(product_levels |> select(product_name),
-             by = "product_name") |>
-  arrange(desc(volume)) |>
-  mutate(product_name = factor(product_name, levels = product_levels$product_name),
-         cum_volume = cumsum(volume))
-
-max_cum_volume = max(data_for_plot$cum_volume)
-  
-p2 <- data_for_plot |>
-  ggplot(aes(cum_volume, product_name)) +
-  geom_point(na.rm = TRUE) +
-  scale_x_continuous(labels = label_number(scale_cut = cut_short_scale()),
-                     sec.axis = sec_axis(~ . / max_cum_volume,
-                                         labels = label_percent(accuracy = 1))
-                     ) +
-  expand_limits(x = 0) +
-  labs(
-    subtitle = glue("Commodity contribution to total amount extracted {round(max_cum_volume / 1e6, digits = 0)}B)"),
-    x = "Cumulative amount (units vary)",
-    y = NULL
-  )
-
-p1 + #p2 +
-  plot_annotation(
-    title = 'Australian mining commodity extraction in 2021',
+    y = "Amount (log10 scale)",
     caption = my_caption
-  ) #+
-  #plot_layout(widths = c(5, 1))
+  )
+```
+
+<br>
+
+## Output per year by commodity
+
+The output per year plots for each commodity is the sum of the output of all mines producing that commodity--which can vary significantly over short time periods. Mudd explains^[https://www.nature.com/articles/s41597-023-02275-z ]:
+
+>The process of mining can be simplified to the following: mineral exploration finds a notable deposit of economic potential, approvals for mining are sought and obtained, the mine is built and begins operations, the deposit is eventually depleted or becomes uneconomic and the mine is closed and the site rehabilitated, and the cycle begins again (e.g., Spitz & Trudinger4; Darling5; IIED & WBCSD6). Mining operations can be conducted through open pit or underground techniques, producing ‘ore’ which contains economic concentrations of the target metals or minerals as well as ‘waste rock’ with low to uneconomic concentrations of metals or minerals. The ore is processed to produce a saleable product such as a metal-rich concentrate (e.g., copper, nickel, lead, zinc or tin-rich concentrates), beneficiated mineral concentrate (e.g., saleable iron ore, beneficiated bauxite, washed coal) or metallic product (e.g., gold-silver doré bars, copper metal). After removal of the saleable product, the remaining minerals are called ‘tailings’ and are typically discharged to an engineered storage dam while waste rock is usually placed in large piles.
+
+```{r, fig.height=10, fig.width=14}
+#| label: fig-output-over-time
+#| fig-cap: "Output over 100 years"
+#| fig-width: 14
+#| fig-height: 10
+#| column: screen-inset-right
+
+product_levels <- dta_yearly_long |>
+  filter(!is.na(volume)) |>
+  slice_max(order_by = volume, n = 1,
+            by = product_volume) |>
+  arrange(desc(volume)) |>
+  pull(product_volume)
+
+dta_yearly_long |>
+  mutate(product_volume = factor(product_volume, levels = product_levels)) |>
+  ggplot(aes(year, volume, color = product_volume)) +
+  geom_line(na.rm = TRUE, show.legend = FALSE) +
+  scale_x_continuous(breaks = c(1900, 1950, 2000)) +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale()),
+  ) +
+  facet_wrap(~ product_volume, scales = "free_y") +
+  labs(
+    title = glue("Australian mining output"),
+    subtitle = glue("Arranged by highest to lowest peak amounts {year_first}-{year_last}"),
+    x = NULL,
+    y = "Amount (Y axis scale varies)",
+    caption = my_caption
+  )
 
 ```
 
 <br>
 
-From greatest to smallest amounts (units vary).
+## Commodities at or near peak production levels
 
-```{r}
-#| label: fig-output-yearly-grouped-by-scale
-#| fig-cap: "Yearly Australian mining output"
-
-walk(n_groups:1, plot_group)
-
-```
-
-## Products at or near peak production levels
-
-For the following, production volume in 2021 was in the top `r percent(1 - peak_production_cutoff)` of historical peak production. Since the scale of the volumes is so wide, I use a log scale on the Y axis.
+Production volume in 2021 was in the top `r percent(1 - peak_production_cutoff)` of historical peak production for the following commodities. Since the scale of the volumes is so wide, I use a log scale on the Y axis.
 
 Some observations:
 
 * It's distressing in these days of global warming that black coal production is near its peak.
 * With the current insatiable demand for batteries, it's not surprising that lithium mining has increased.
 
-
-```{r}
+```{r, fig.height=6, fig.width=8}
 #| label: fig-output-yearly-at-peak
 #| fig-cap: "Products at or near peak production: yearly Australian mining output"
+#| fig-height: 6
+#| fig-width: 8
 
 peak_products <- dta_yearly_long |>
   filter(year == max(year, na.rm = TRUE) & volume >= volume_max * peak_production_cutoff) 
 
-data_for_plot_log <- dta_yearly_long |>
+data_for_plot <- dta_yearly_long |>
   inner_join(peak_products %>% select(product_volume),
-             by = "product_volume") |>
-  mutate(group_volume = 10)
+             by = "product_volume")
 
-plot_group_log(10)
+labels_for_plot <- data_for_plot |>
+  filter(!is.na(volume)) |>
+  mutate(final_year = max(year),
+         .by = product_volume) |>
+  filter(year == max(year),
+         .by = product_volume)
+  
+data_for_plot |>
+  ggplot(aes(year, volume, color = product_volume, group = product_volume)) +
+  geom_line(na.rm = TRUE, show.legend = FALSE) +
+  geom_text_repel(data = labels_for_plot,
+                  aes(max(year) + 30, volume, label = product_volume),
+                  hjust = 1, vjust = 0.5, show.legend = FALSE, 
+                  direction = "y", force = 0.4) +
+  scale_x_continuous(breaks = c(1850, 1900, 1950, 2000)) +
+  scale_y_log10(labels = label_number(scale_cut = cut_short_scale()),
+                limits = c(1, NA)) +
+  labs(
+    title = glue("Commodities near peak output in Australia"),
+    subtitle = glue("{year_first}-{year_last}"),
+    x = NULL,
+    y = "Amount (log10 scale)",
+    caption = my_caption
+  )
   
 ```
 
 <br>
 
-## Tables
+## Table
 
 ```{r}
 #| label: tbl-summary-volume-2021
@@ -140,13 +165,14 @@ dta_yearly_long |>
   filter(year == 2021) |> 
   select(product_name, units_volume, volume, volume_max, volume_pct_of_max) |>
   arrange(desc(volume), desc(volume_max)) |>
-  mutate(rowid = row_number()) |>
+  mutate(cum_pct = cumsum(volume / sum(volume, na.rm = TRUE)),
+         rowid = row_number()) |>
   gt() |>
   tab_header(md("**Australian mining output 2021**")) |>
   fmt_number(columns = c(volume, volume_max),
              decimals = 0,
              suffixing = TRUE) |>
-  fmt_percent(columns = volume_pct_of_max,
+  fmt_percent(columns = c(volume_pct_of_max, cum_pct),
              decimals = 0) |>
   sub_missing() |>
   tab_source_note(md("*Data: Gavin Mudd. Analysis: Daniel Moul*"))

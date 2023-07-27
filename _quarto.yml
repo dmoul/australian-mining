@@ -4,7 +4,7 @@ project:
 
 book:
   title: "Australian Mining"
-  subtitle: "Add subtitle here"
+  subtitle: "Consolidated output, prices, and value 1922-2021"
   author: "Daniel Moul"
   date: now
   #site-url: ""
@@ -12,7 +12,7 @@ book:
     - index.qmd
     - yearly-output.qmd
     - yearly-prices.qmd
-    - yearly-value-extraction.qmd
+    - yearly-value.qmd
     - notes.qmd
 
 execute:

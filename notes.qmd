@@ -1,4 +1,4 @@
-# Notes
+# Notes {.unnumbered}
 
 ```{r}
 #| label: setup
@@ -12,7 +12,7 @@ year_n = year_last - year_first + 1
 
 ```
 
-## References 
+## Source data and description 
 
 Mudd, G.M. A Comprehensive dataset for Australian mine production 1799 to 2021. Sci Data 10, 391 (2023). <https://doi.org/10.1038/s41597-023-02275-z>
 
@@ -22,7 +22,7 @@ I downloaded "Aust-Mine-Prod-v01.4b-Master.xlsx" on 2023-07-20.
 
 <br>
 
-## From the "Notes" sheet
+## From the Notes sheet
 
 The author provided the following on the "Notes" sheet
 
@@ -76,15 +76,11 @@ Data for diamonds in 2021 is missing (cells BT233, BV233, BX233). Since producti
 
 In the spreadsheet Ilminite in year 1932 (cell JV144) has character data rather than number in the cell, which converted to NA (missing data). "Ilmenite is the most important ore of titanium and the main source of titanium dioxide, which is used in paints, printing inks, fabrics, plastics, paper, sunscreen, food and cosmetics."^[https://en.wikipedia.org/wiki/Ilmenite ]
 
-## Other notes
-
-Another name for alumina is [aluminum oxide](https://en.wikipedia.org/wiki/Aluminium_oxide) ($Al_2O_3$)^[https://www.britannica.com/science/alumina ]. Also known as Aluminium(III) oxide. It's mostly used in the production of aluminum metal^[https://en.wikipedia.org/wiki/Aluminium_oxide ].
-
 <br>
 
 ## Adjusting for inflation
 
-The Reserve Bank of Australia offers historical CPI factors for download at <https://www.rba.gov.au/inflation/measures-cpi.html>, which includes a spreadsheet at the link [Historical Series and Explanatory Notes](https://www.rba.gov.au/statistics/tables/xls/g01hist.xls?v=2023-07-22-13-19-07). I downloaded "g01hist.xls" on 2023-07-22 US time.
+The Reserve Bank of Australia offers historical CPI factors for download at <https://www.rba.gov.au/inflation/measures-cpi.html>, which includes a spreadsheet at the link [Historical Series and Explanatory Notes](https://www.rba.gov.au/statistics/tables/xls/g01hist.xls?v=2023-07-22-13-19-07). I downloaded "g01hist.xls" on 2023-07-22.
 
 ```{r}
 cpi |>
@@ -103,7 +99,9 @@ cpi |>
 
 <br>
 
-## Coal exports
+## Other notes
+
+Another name for alumina is [aluminium oxide](https://en.wikipedia.org/wiki/Aluminium_oxide) ($Al_2O_3$)^[https://www.britannica.com/science/alumina ]. Also known as Aluminium(III) oxide. It's mostly used in the production of aluminum metal^[https://en.wikipedia.org/wiki/Aluminium_oxide ]. In North American English aluminium is aluminum.
 
 According to Geosciences Australia, a government agency, Japan is the the destination of more Australian coal then any other country, followed by China (assuming post-COVID-19 industrial activity returns to trend), then India, South Korea, and Taiwan. See Figure 9^[
 <https://www.ga.gov.au/digital-publication/aecr2022/coal> ].
