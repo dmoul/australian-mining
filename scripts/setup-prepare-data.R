@@ -99,9 +99,8 @@ if(!file.exists(fname_prepared_data)) {
 ###### data prep ######
 
 dta_yearly_volume_value <- dta_yearly_all_columns |>
-  #select(year, contains("Australia") & !contains(c(r"($)", r"(%)")) & !contains(c("Placer", "PGE", "Platinum Group", "Rare Earths"))) |>
   select(year, contains("Australia") & !contains(r"(%)") & !contains(c("Placer", "PGE", "Platinum Group", "Rare Earths", "Bismuth",
-                                                                       "Gallium", "Vanadium"))) |>
+                                                                       "Gallium", "Vanadium", "Niobium"))) |>
   mutate(across(everything(), as.double)) # convert errant strings to NA (creates warning message: NAs introduced by coercion)
 # TODO figure out why some column names aren't following the main pattern; for now those ores will be removed in the next step)
 # TODO add back in contains(c("Placer", "PGE", "Platinum Group", "Rare Earths")
@@ -118,8 +117,6 @@ my_colnames <- str_replace_all(colnames(dta_yearly_volume_value),
                                  "_Australia" = "", 
                                  " .*" = "") 
 )
-# TODO figure out what some of the units are
-#. for example "Managanese t Mn conc"
 
 names(dta_yearly_volume_value) <- my_colnames
 
@@ -127,8 +124,8 @@ dta_yearly_volume_value_long <- dta_yearly_volume_value |>
   pivot_longer(cols = contains("_"),
                names_to = "product",
                values_to = "amount") |>
-  filter(!product %in% c("Niobium_t", "Bismuth_t")) |> # too little mined to report it
-  mutate(#units = str_extract(product, "([[:alpha:]][-]?)+$"),
+  #filter(!product %in% c("Niobium_t", "Bismuth_t")) |> # too little mined to report it
+  mutate(
     my_units = str_extract(product, "(?<=_).+$"),
     type = if_else(str_detect(my_units, "[$]"), "price", "volume"),
     product_name = str_extract(product, "^([[:alpha:]][-]?)+"),
@@ -143,20 +140,7 @@ dta_yearly_volume_value_long <- dta_yearly_volume_value |>
          .by = type
   )
 
-# summary_dta_yearly_volume_long <- summary_dta_yearly_volume_value_long |>
-#   filter(type == "volume") |>
-#   rename(volume = amount,
-#          volume_max = amount_max,
-#          group_volume = group) #|>
-#   # mutate(group_volume = cut_number(volume_max, n_groups,
-#   #                           #include.lowest = TRUE,
-#   #                           ordered_result = TRUE,
-#   #                           labels = FALSE),
-#   #        .by = type
-#   # )
-
 dta_yearly_long <- dta_yearly_volume_value_long |>
-  #mutate(product_name = str_extract(product, str_extract(product, "^([[:alpha:]][-]?)+"))) |>
   group_by(year, product_name) |>
   mutate(product_volume = lag(product, n = 1, default = NA),
          volume = lag(amount, n = 1, default = NA),
@@ -173,11 +157,8 @@ dta_yearly_long <- dta_yearly_volume_value_long |>
   mutate(value = price * volume) |>
   mutate(volume_max = max(volume, na.rm = TRUE),
          volume_pct_of_max = volume / volume_max,
-         #price_max = max(price, na.rm = TRUE),
          value_max = max(value, na.rm = TRUE),
          .by = c(product_name)) |>
-  #summary_dta_yearly_value_2021_dollars_long <- summary_dta_yearly_value_long |>
-  #rename(price = amount, price_max = amount_max) |>
   inner_join(cpi |> select(year, factor_2021),
              by = "year") |>
   mutate(price_2021 = price * factor_2021) |>
@@ -188,229 +169,16 @@ dta_yearly_long <- dta_yearly_volume_value_long |>
          value_max_2021 = value_max * factor_2021,
          value_2021_pct_of_max = value_2021 / value_max_2021) |>
   mutate(group_value = cut_number(value_max, n_groups,
-                            #include.lowest = TRUE,
-                            ordered_result = TRUE,
-                            labels = FALSE)) |>
-  mutate(group_price_2021 = cut_number(price_max_2021, n_groups,
                                   #include.lowest = TRUE,
                                   ordered_result = TRUE,
                                   labels = FALSE)) |>
+  mutate(group_price_2021 = cut_number(price_max_2021, n_groups,
+                                       #include.lowest = TRUE,
+                                       ordered_result = TRUE,
+                                       labels = FALSE)) |>
   mutate(group_value_2021 = cut_number(value_max_2021, n_groups,
                                        #include.lowest = TRUE,
                                        ordered_result = TRUE,
                                        labels = FALSE)) |>
   select(year, product_name, contains("price"), contains("volume"), contains("value"))
-
-# summary_dta_yearly_value_2021_dollars_long <- summary_dta_yearly_value_long |>
-#   rename(price = amount, price_max = amount_max) |>
-#   inner_join(cpi |> select(year, factor_2021),
-#              by = "year") |>
-#   mutate(price_2021 = price * factor_2021) |>
-#   mutate(price_max_2021 = max(price_2021, na.rm = TRUE),
-#          .by = c(product, units)) |>
-#   mutate(price_2021_pct_of_max = price_2021 / price_max_2021,
-#          value_2021 = value * factor_2021,
-#          value_max_2021 = value_max * factor_2021,
-#          value_2021_pct_of_max = value_2021 / value_max_2021)
-
-###### plotting functions ######
-
-# plot_group <- function(grp) {
-#   
-#   # test
-#   # grp = 1
-#   
-#   # assume dta_yearly_long exists in parent environment
-#   
-#   dta_for_plot <- dta_yearly_long |>
-#     filter(group_volume == grp,
-#            year >= min(dta_yearly_long$year, na.rm = TRUE)) |>
-#     mutate(group = glue("Group {grp}"))
-#   
-#   plot_year_min <- min(dta_for_plot$year) #, na.rm = TRUE
-#   plot_year_max <- max(dta_for_plot$year) #, na.rm = TRUE
-#   
-#   labels_for_plot <- dta_for_plot |>
-#     filter(!is.na(volume)) |>
-#     mutate(final_year = max(year), #, na.rm = FALSE
-#            .by = product_volume) |>
-#     filter(year == max(year),
-#            .by = product_volume)
-#   
-#   p <- dta_for_plot |>
-#     ggplot(aes(year, volume, color = product_volume, group = product_volume)) +
-#     geom_line(na.rm = TRUE, show.legend = FALSE) +
-#     # geom_text(data = labels_for_plot,
-#     #           aes(max(year) + 50, amount, label = product),
-#     #           hjust = 1, show.legend = FALSE, check_overlap = TRUE) +
-#     geom_text_repel(data = labels_for_plot,
-#                     aes(max(year) + 30, volume, label = product_volume),
-#                     hjust = 1, vjust = 0.5, show.legend = FALSE, 
-#                     direction = "y", force = 0.4) +
-#     scale_x_continuous(breaks = c(1850, 1900, 1950, 2000)) +
-#     scale_y_continuous(labels = label_number(scale_cut = cut_short_scale()),
-#     ) +
-#     facet_wrap(~ group, scales = "free_y") +
-#     labs(
-#       title = glue("Australian mining output: group {grp}"),
-#       subtitle = glue("{plot_year_min}-{plot_year_max}"),
-#       x = NULL,
-#       y = "Amount",
-#       caption = my_caption
-#     )
-#   
-#   print(p)
-#   
-# }
-
-# test
-# plot_group(2)
-
-# plot_group_log <- function(grp) {
-#   
-#   # test
-#   # grp = 1
-#   
-#   # assume data_for_plot_log (not dta_yearly_long) exists in parent environment
-#   
-#   dta_for_plot <- data_for_plot_log |>
-#     filter(group_volume == grp,
-#            year >= min(data_for_plot_log$year, na.rm = TRUE)) |>
-#     mutate(group = glue("Group {grp}"))
-#   
-#   plot_year_min <- min(dta_for_plot$year) #, na.rm = TRUE
-#   plot_year_max <- max(dta_for_plot$year) #, na.rm = TRUE
-#   
-#   labels_for_plot <- dta_for_plot |>
-#     filter(!is.na(volume)) |>
-#     mutate(final_year = max(year), #, na.rm = FALSE
-#            .by = product_volume) |>
-#     filter(year == max(year),
-#            .by = product_volume)
-#   
-#   p <- dta_for_plot |>
-#     ggplot(aes(year, volume, color = product_volume, group = product_volume)) +
-#     geom_line(na.rm = TRUE, show.legend = FALSE) +
-#     geom_text_repel(data = labels_for_plot,
-#                     aes(max(year) + 30, volume, label = product_volume),
-#                     hjust = 1, vjust = 0.5, show.legend = FALSE, 
-#                     direction = "y", force = 0.4) +
-#     scale_x_continuous(breaks = c(1850, 1900, 1950, 2000)) +
-#     scale_y_log10(labels = label_number(scale_cut = cut_short_scale()),
-#     ) +
-#     facet_wrap(~ group, scales = "free_y") +
-#     labs(
-#       title = glue("Australian mining output: group {grp}"),
-#       subtitle = glue("{plot_year_min}-{plot_year_max}"),
-#       x = NULL,
-#       y = "Amount (log10 scale)",
-#       caption = my_caption
-#     )
-#   
-#   print(p)
-#   
-# }
-
-# plot_group_value <- function(grp) {
-#   
-#   # test
-#   # grp = 1
-#   
-#   # assume dta_yearly_long exists in parent environment
-#   
-#   dta_for_plot <- dta_yearly_long |>
-#     filter(group_value == grp,
-#            year >= min(dta_yearly_long$year, na.rm = TRUE)) |>
-#     mutate(group = glue("Group {grp}"))
-#   
-#   plot_year_min <- min(dta_for_plot$year) #, na.rm = TRUE
-#   plot_year_max <- max(dta_for_plot$year) #, na.rm = TRUE
-#   
-#   labels_for_plot <- dta_for_plot |>
-#     filter(!is.na(value)) |>
-#     mutate(final_year = max(year), #, na.rm = FALSE
-#            .by = product_price) |>
-#     filter(year == max(year),
-#            .by = product_name)
-#   
-#   p <- dta_for_plot |>
-#     ggplot(aes(year, value, color = product_name, group = product_name)) +
-#     geom_line(na.rm = TRUE, show.legend = FALSE) +
-#     # geom_text(data = labels_for_plot,
-#     #           aes(max(year) + 50, amount, label = product),
-#     #           hjust = 1, show.legend = FALSE, check_overlap = TRUE) +
-#     geom_text_repel(data = labels_for_plot,
-#                     aes(max(year) + 30, value, label = product_name),
-#                     hjust = 1, vjust = 0.5, show.legend = FALSE, 
-#                     direction = "y", force = 0.4) +
-#     scale_x_continuous(breaks = c(1850, 1900, 1950, 2000)) +
-#     scale_y_continuous(labels = label_number(scale_cut = cut_short_scale(),
-#                                              #scale_cut = cut_si("M"), # TODO: confirm this
-#                                              prefix = "$"),
-#     ) +
-#     facet_wrap(~ group_value, scales = "free_y") +
-#     labs(
-#       title = glue("Australian mining value extracted: group {grp}"),
-#       subtitle = glue("{plot_year_min}-{plot_year_max}"),
-#       x = NULL,
-#       y = "AUD (nominal)",
-#       caption = my_caption
-#     )
-#   
-#   print(p)
-#   
-# }
-
-# test
-# plot_group_value(2)
-
-
-# plot_group_value_2021 <- function(grp) {
-#   
-#   # test
-#   # grp = 1
-#   
-#   # assume dta_yearly_long exists in parent environment
-#   
-#   dta_for_plot <- dta_yearly_long |>
-#     filter(group_value_2021 == grp,
-#            year >= min(dta_yearly_long$year, na.rm = TRUE)) |>
-#     mutate(group = glue("Group {grp}"))
-#   
-#   plot_year_min <- min(dta_for_plot$year) #, na.rm = TRUE
-#   plot_year_max <- max(dta_for_plot$year) #, na.rm = TRUE
-#   
-#   labels_for_plot <- dta_for_plot |>
-#     filter(!is.na(value_2021)) |>
-#     mutate(final_year = max(year), #, na.rm = FALSE
-#            .by = product_price) |>
-#     filter(year == max(year),
-#            .by = product_name)
-#   
-#   p <- dta_for_plot |>
-#     ggplot(aes(year, value_2021, color = product_name, group = product_name)) +
-#     geom_line(na.rm = TRUE, show.legend = FALSE) +
-#     geom_text_repel(data = labels_for_plot,
-#                     aes(max(year) + 30, value_2021, label = product_name),
-#                     hjust = 1, vjust = 0.5, show.legend = FALSE, 
-#                     direction = "y", force = 0.4) +
-#     scale_x_continuous(breaks = c(1850, 1900, 1950, 2000)) +
-#     scale_y_continuous(labels = label_number(scale_cut = cut_short_scale(),
-#                                              prefix = "$"),
-#     ) +
-#     facet_wrap(~ group_value_2021, scales = "free_y") +
-#     labs(
-#       title = glue("Australian mining value extracted: group {grp}"),
-#       subtitle = glue("2021 dollars. {plot_year_min}-{plot_year_max}"),
-#       x = NULL,
-#       y = "AUD (2021 dollars)",
-#       caption = my_caption
-#     )
-#   
-#   print(p)
-#   
-# }
-
-# test
-# plot_group_value_2021(2)
 
