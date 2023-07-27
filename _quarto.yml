@@ -14,9 +14,6 @@ book:
     - yearly-value.qmd
     - notes.qmd
 
-#execute:
-#  freeze: false # re-calculate and re-render only when source changes
-
 format:
   html:
     code-fold: true
