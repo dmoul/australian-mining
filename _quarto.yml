@@ -4,10 +4,9 @@ project:
 
 book:
   title: "Australian Mining"
-  subtitle: "Consolidated output, prices, and value 1922-2021"
+  subtitle: "Production output, prices, and value 1922-2021"
   author: "Daniel Moul"
   date: now
-  #site-url: ""
   chapters: 
     - index.qmd
     - yearly-output.qmd
@@ -15,8 +14,8 @@ book:
     - yearly-value.qmd
     - notes.qmd
 
-execute:
-  freeze: false # re-calculate and re-render only when source changes
+#execute:
+#  freeze: false # re-calculate and re-render only when source changes
 
 format:
   html:
@@ -27,8 +26,3 @@ format:
     toc: true
     toc-depth: 3
     title-block-banner: true  
-
-    
-
-
-
