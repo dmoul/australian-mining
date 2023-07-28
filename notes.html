@@ -209,6 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#source-data-and-description" id="toc-source-data-and-description" class="nav-link active" data-scroll-target="#source-data-and-description">Source data and description</a></li>
   <li><a href="#sec-notes-sheet" id="toc-sec-notes-sheet" class="nav-link" data-scroll-target="#sec-notes-sheet">From the Notes sheet</a></li>
   <li><a href="#annual-data-sheet" id="toc-annual-data-sheet" class="nav-link" data-scroll-target="#annual-data-sheet">“Annual data” sheet</a></li>
+  <li><a href="#sec-triangulating" id="toc-sec-triangulating" class="nav-link" data-scroll-target="#sec-triangulating">Triangulating with more authoritative sources</a></li>
   <li><a href="#adjusting-for-inflation" id="toc-adjusting-for-inflation" class="nav-link" data-scroll-target="#adjusting-for-inflation">Adjusting for inflation</a></li>
   </ul>
 </nav>
@@ -272,6 +273,25 @@ kg Au</code></pre>
 <p>In the spreadsheet Ilminite in year 1932 (cell JV144) has character data rather than number in the cell, which converted to NA (missing data). “Ilmenite is the most important ore of titanium and the main source of titanium dioxide, which is used in paints, printing inks, fabrics, plastics, paper, sunscreen, food and cosmetics.”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p><br></p>
 </section>
+<section id="sec-triangulating" class="level2">
+<h2 class="anchored" data-anchor-id="sec-triangulating">Triangulating with more authoritative sources</h2>
+<p>Numbers are unlikely to match for the following reasons:</p>
+<ul>
+<li>One could report the amounts (1) <em>mined</em>, (2) <em>produced</em> (which may include imports beneficieated or otherwise processed in Australia), and (3) <em>exported</em> (some output is consumed domestically). I’m using the column from Mudd’s data that are (2) I believe.</li>
+<li>Rather than using CPI to calculate constant dollars, one could choose other measures of inflation more centered on mining or manufacturing. I chose CPI, because it’s the measure for which the RBA provides 100 years of data. It’s also the most common and familiar measure.</li>
+<li>Percentages of total production won’t match exactly, since I excluded <a href="https://en.wikipedia.org/wiki/Platinum_group">Platinum Group</a> Elements (PGEs), <a href="https://en.wikipedia.org/wiki/Rare-earth_element">Rare Earth Elements</a>, Niobium, Bismuth, Gallium, and Vanadium due to small quantities mined, insufficient data points, incomplete data series as noted by the author, or the need for more involved data preparation to present them accurately.</li>
+<li>Mudd made some generalizing assumptions documented in <em>A Comprehensive dataset for Australian mine production 1799 to 2021</em> and in the master spreadsheet. See <a href="#sec-notes-sheet"><span>Section&nbsp;2</span></a> in the Notes.</li>
+</ul>
+<p>For example, <em>Australia Iron Ore Mining Market by Reserves and Production, Assets and Projects, Fiscal Regime including Taxes and Royalties, Key Players and Forecast, 2021-2026</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> reports Australian iron ore market in 2021 was 922.2 Mt. This matches Mudd’s 2021 amount.</p>
+<p>Compared to <em>World Mining Data 2022</em><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> (which has 2020 data whereas I’m working with 2021 data)</p>
+<ul>
+<li>My numbers are in similar ranges for the production of Cobalt, Nickel, Tungsten, Bauxite, Copper, Lead, Tin, Zinc, Gold, Silver</li>
+<li>For Manganese and Tantalum I report about 200%</li>
+<li>For Lithium I report about 50%</li>
+</ul>
+<p>I have not attempted to reconcile prices or values of production with more authoritative sources. If any numbers seem wildly erroneous, please let me know.</p>
+<p><br></p>
+</section>
 <section id="adjusting-for-inflation" class="level2">
 <h2 class="anchored" data-anchor-id="adjusting-for-inflation">Adjusting for inflation</h2>
 <p>The Reserve Bank of Australia offers historical CPI factors for download at <a href="https://www.rba.gov.au/inflation/measures-cpi.html" class="uri">https://www.rba.gov.au/inflation/measures-cpi.html</a>, which includes a spreadsheet at the link <a href="https://www.rba.gov.au/statistics/tables/xls/g01hist.xls?v=2023-07-22-13-19-07">Historical Series and Explanatory Notes</a>. I downloaded “g01hist.xls” on 2023-07-22.</p>
@@ -302,7 +322,9 @@ kg Au</code></pre>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>https://en.wikipedia.org/wiki/Ilmenite <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p><a href="https://en.wikipedia.org/wiki/Ilmenite" class="uri">https://en.wikipedia.org/wiki/Ilmenite</a> <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://www.globaldata.com/store/report/australia-iron-ore-mining-market-analysis/" class="uri">https://www.globaldata.com/store/report/australia-iron-ore-mining-market-analysis/</a> <a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://www.world-mining-data.info/wmd/downloads/PDF/WMD2022.pdf" class="uri">https://www.world-mining-data.info/wmd/downloads/PDF/WMD2022.pdf</a> volume 37. page 201-202. Published by the Austrian Federal Ministry of Agriculture, Regions and Tourism Stubenring 1, 1010 Vienna, on behalf of the International Organizing Committee for the World Mining Congress <a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
