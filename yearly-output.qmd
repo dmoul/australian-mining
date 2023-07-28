@@ -66,7 +66,7 @@ dta_yearly_long |>
 
 ## Output per year by commodity
 
-The output per year plots for each commodity is the sum of the output of all mines producing that commodity--which can vary significantly over short time periods. Mudd explains^[https://www.nature.com/articles/s41597-023-02275-z ]:
+The output per year plots for each commodity is the sum of the output of all mines producing that commodity--which can vary significantly over short time periods. Mudd explains^[<https://www.nature.com/articles/s41597-023-02275-z> ]:
 
 >The process of mining can be simplified to the following: mineral exploration finds a notable deposit of economic potential, approvals for mining are sought and obtained, the mine is built and begins operations, the deposit is eventually depleted or becomes uneconomic and the mine is closed and the site rehabilitated, and the cycle begins again .... Mining operations can be conducted through open pit or underground techniques, producing ‘ore’ which contains economic concentrations of the target metals or minerals as well as ‘waste rock’ with low to uneconomic concentrations of metals or minerals. The ore is processed to produce a saleable product such as a metal-rich concentrate (e.g., copper, nickel, lead, zinc or tin-rich concentrates), beneficiated mineral concentrate (e.g., saleable iron ore, beneficiated bauxite, washed coal) or metallic product (e.g., gold-silver doré bars, copper metal). After removal of the saleable product, the remaining minerals are called ‘tailings’ and are typically discharged to an engineered storage dam while waste rock is usually placed in large piles.
 
@@ -112,7 +112,7 @@ Some observations:
 
 * It's distressing in these days of global warming that black coal production is near its peak. According to Geosciences Australia, a government agency, Japan is the the destination of more Australian coal then any other country, followed by China (assuming post-COVID-19 industrial activity returns to trend), then India, South Korea, and Taiwan. See Figure 9^[
 <https://www.ga.gov.au/digital-publication/aecr2022/coal> ].
-* The main use of Bauxite and Alumina is in aluminium smelting. Another name for alumina is [aluminium oxide](https://en.wikipedia.org/wiki/Aluminium_oxide) ($Al_2O_3$) and Aluminium(III) oxide^[https://www.britannica.com/science/alumina ]. In North American English *aluminium* is *aluminum*.
+* The main use of Bauxite and Alumina is in aluminium smelting. Another name for alumina is [aluminium oxide](https://en.wikipedia.org/wiki/Aluminium_oxide) ($Al_2O_3$) and Aluminium(III) oxide^[<https://www.britannica.com/science/alumina> ]. In North American English *aluminium* is *aluminum*.
 * Given the insatiable demand for batteries, it's not surprising that lithium mining has increased dramatically over the last 30-40 years.
 
 ```{r, fig.height=6, fig.width=8}
