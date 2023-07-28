@@ -23,7 +23,7 @@ I wanted to know:
 
 To answer the first question here: The top three commodities by mass in 2021 were iron ore, coal, and bauxite, together making up about 97% of 2021 production (@fig-amount-2021, @tbl-summary-mass-2021). In terms of value, the top three were iron ore, coal, and gold with a combined value of about 88% of the total value of production (@fig-value-2021, @tbl-summary-value-2021).
 
-Commenting on "Table 5 Cumulative Australian mine production by major time period and metal and mineral", Mudd notes^[https://www.nature.com/articles/s41597-023-02275-z ]:
+Commenting on "Table 5 Cumulative Australian mine production by major time period and metal and mineral", Mudd notes^[<https://www.nature.com/articles/s41597-023-02275-z> ]:
 
 >For Table [5](https://www.nature.com/articles/s41597-023-02275-z/tables/5)), the two most important observations are the increasing diversity of metals and minerals produced over time and the rapidly increasing scales of production across most commodities.
 
@@ -35,20 +35,11 @@ The paper includes specific notes on each commodity, which I will not repeat her
 
 While Mudd provided 223 years of data, I use only the most recent 100 years (1922-2021), which is the period for which I have Consumer Price Index data from the Reserve Bank of Australia and thus can convert prices and value to constant 2021 dollars.
 
-I did not attempt to reconcile numbers in this analysis with data published elsewhere. They are unlikely to match for the following reasons:
-
-* I have not distinguished among the amounts *mined*, *produced* (which may include imports beneficieated or otherwise processed in Australia), and *exported* (some output is consumed domestically).
-* Rather than using CPI, one could choose other measures of inflation more centered on mining or manufacturing. I chose CPI, because it's the measure for which the RBA provides 100 years of data. It's also the most common and familiar measure.
-* Percentages won't match, since I excluded [Platinum Group](https://en.wikipedia.org/wiki/Platinum_group) Elements (PGEs), [Rare Earth Elements](https://en.wikipedia.org/wiki/Rare-earth_element), Niobium, Bismuth, Gallium, and Vanadium due to small quantities mined, insufficient data points, incomplete data series as noted by the author, or the need for more involved data preparation to present them accurately.
-* Mudd made some generalizing assumptions documented in *A Comprehensive dataset for Australian mine production 1799 to 2021* and in the master spreadsheet, including converting most commodity prices from USD to AUD at the rate $AUD\ 2 = USD\ 1$, since most commodities are priced in USD^[https://www.dmp.wa.gov.au/About-Us-Careers/Latest-Statistics-Release-4081.aspx ]. See @sec-notes-sheet in the Notes.
-
-If any numbers seem wildly erroneous, please let me know.
+The numbers in this analysis are likely to diverge from more authoritative sources. See discussion in *@sec-triangulating Triangulating with more authoritative sources* in the Notes.
 
 <br>
 
 ## License
-
-This information is offered as-is with no warranties as to its correctness or fitness for any purpose. Use at your own risk.
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 

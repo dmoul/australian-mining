@@ -74,7 +74,28 @@ Although I eventually excluded these items, in order to parse the spreadsheet, I
 
 Data for diamonds in 2021 is missing (cells BT233, BV233, BX233). Since production has been on a downward trend since 2017, I estimated 2021 production by averaging the decline the prior two years and subtracting it from 2020 production.
 
-In the spreadsheet Ilminite in year 1932 (cell JV144) has character data rather than number in the cell, which converted to NA (missing data). "Ilmenite is the most important ore of titanium and the main source of titanium dioxide, which is used in paints, printing inks, fabrics, plastics, paper, sunscreen, food and cosmetics."^[https://en.wikipedia.org/wiki/Ilmenite ]
+In the spreadsheet Ilminite in year 1932 (cell JV144) has character data rather than number in the cell, which converted to NA (missing data). "Ilmenite is the most important ore of titanium and the main source of titanium dioxide, which is used in paints, printing inks, fabrics, plastics, paper, sunscreen, food and cosmetics."^[<https://en.wikipedia.org/wiki/Ilmenite> ]
+
+<br>
+
+## Triangulating with more authoritative sources {#sec-triangulating}
+
+Numbers are unlikely to match for the following reasons:
+
+* One could report the amounts (1) *mined*, (2) *produced* (which may include imports beneficieated or otherwise processed in Australia), and (3) *exported* (some output is consumed domestically). I'm using the column from Mudd's data that are (2) I believe.
+* Rather than using CPI to calculate constant dollars, one could choose other measures of inflation more centered on mining or manufacturing. I chose CPI, because it's the measure for which the RBA provides 100 years of data. It's also the most common and familiar measure.
+* Percentages of total production won't match exactly, since I excluded [Platinum Group](https://en.wikipedia.org/wiki/Platinum_group) Elements (PGEs), [Rare Earth Elements](https://en.wikipedia.org/wiki/Rare-earth_element), Niobium, Bismuth, Gallium, and Vanadium due to small quantities mined, insufficient data points, incomplete data series as noted by the author, or the need for more involved data preparation to present them accurately.
+* Mudd made some generalizing assumptions documented in *A Comprehensive dataset for Australian mine production 1799 to 2021* and in the master spreadsheet. See @sec-notes-sheet in the Notes.
+
+For example, *Australia Iron Ore Mining Market by Reserves and Production, Assets and Projects, Fiscal Regime including Taxes and Royalties, Key Players and Forecast, 2021-2026*^[<https://www.globaldata.com/store/report/australia-iron-ore-mining-market-analysis/> ] reports Australian iron ore market in 2021 was 922.2 Mt. This matches Mudd's 2021 amount.
+
+Compared to *World Mining Data 2022*^[<https://www.world-mining-data.info/wmd/downloads/PDF/WMD2022.pdf> volume 37. page 201-202. Published by the Austrian Federal Ministry of Agriculture, Regions and Tourism Stubenring 1, 1010 Vienna, on behalf of the International Organizing Committee for the World Mining Congress ] (which has 2020 data whereas I'm working with 2021 data)
+
+-   My numbers are in similar ranges for the production of Cobalt, Nickel, Tungsten, Bauxite, Copper, Lead, Tin, Zinc, Gold, Silver
+-   For Manganese and Tantalum I report about 200%
+-   For Lithium I report about 50%
+
+I have not attempted to reconcile prices or values of production with more authoritative sources. If any numbers seem wildly erroneous, please let me know.
 
 <br>
 
