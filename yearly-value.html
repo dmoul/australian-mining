@@ -208,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#contributions-in-2021-to-total-value" id="toc-contributions-in-2021-to-total-value" class="nav-link active" data-scroll-target="#contributions-in-2021-to-total-value"><span class="toc-section-number">3.1</span>  Contributions in 2021 to total value</a></li>
-  <li><a href="#value-over-time-by-commodity" id="toc-value-over-time-by-commodity" class="nav-link" data-scroll-target="#value-over-time-by-commodity"><span class="toc-section-number">3.2</span>  Value over time by commodity</a></li>
+  <li><a href="#yearly-value-by-commodity" id="toc-yearly-value-by-commodity" class="nav-link" data-scroll-target="#yearly-value-by-commodity"><span class="toc-section-number">3.2</span>  Yearly value by commodity</a></li>
   <li><a href="#commodities-at-or-near-peak-value-of-production" id="toc-commodities-at-or-near-peak-value-of-production" class="nav-link" data-scroll-target="#commodities-at-or-near-peak-value-of-production"><span class="toc-section-number">3.3</span>  Commodities at or near peak value of production</a></li>
   <li><a href="#table" id="toc-table" class="nav-link" data-scroll-target="#table"><span class="toc-section-number">3.4</span>  Table</a></li>
   </ul>
@@ -273,14 +273,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">labels =</span> <span class="fu">label_percent</span>(<span class="at">accuracy =</span> <span class="dv">1</span>))) <span class="sc">+</span></span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">glue</span>(<span class="st">"Commodity contribution to total value (AUD {round(max_cum_value / 1e9, digits = 0)}B)"</span>),</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">glue</span>(<span class="st">"Commodity contribution to total value in 2021 (AUD {round(max_cum_value / 1e9, digits = 0)}B)"</span>),</span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Cumulative value (AUD)"</span>,</span>
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span></span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">'Australian mining value of products in 2021'</span>,</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">'Australian mining: value of products produced in 2021'</span>,</span>
 <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> my_caption</span>
 <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -295,8 +295,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><br></p>
 </section>
-<section id="value-over-time-by-commodity" class="level2 page-columns page-full" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="value-over-time-by-commodity"><span class="header-section-number">3.2</span> Value over time by commodity</h2>
+<section id="yearly-value-by-commodity" class="level2 page-columns page-full" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="yearly-value-by-commodity"><span class="header-section-number">3.2</span> Yearly value by commodity</h2>
 <div class="cell page-columns page-full">
 <details>
 <summary>Show the code</summary>
@@ -317,7 +317,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> product_name, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">glue</span>(<span class="st">"Australian mining value of products (2021 dollars)"</span>),</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">glue</span>(<span class="st">"Australian mining yearly value of products (2021 dollars)"</span>),</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">glue</span>(<span class="st">"Arranged from highest to lowest peak value. {year_first}-{year_last}"</span>),</span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"AUD (2021 dollars) Y axis scale varies"</span>,</span>
@@ -337,11 +337,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="commodities-at-or-near-peak-value-of-production" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="commodities-at-or-near-peak-value-of-production"><span class="header-section-number">3.3</span> Commodities at or near peak value of production</h2>
-<p>For the following, the value of production in 2021 was in the top 10% of historical peak value Since the scale of the value is so wide, I use a log scale on the Y axis.</p>
-<p>Some observations:</p>
-<ul>
-<li><strong><em>TODO: Add here</em></strong></li>
-</ul>
+<p>For the following, the value of production in 2021 was within 10% of historical peak value.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -415,23 +411,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output-display">
 <div id="tbl-summary-value-2021" class="anchored">
 
-<div id="nlywrrnsld" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#nlywrrnsld table {
+<div id="lfrtanfhru" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lfrtanfhru table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#nlywrrnsld thead, #nlywrrnsld tbody, #nlywrrnsld tfoot, #nlywrrnsld tr, #nlywrrnsld td, #nlywrrnsld th {
+#lfrtanfhru thead, #lfrtanfhru tbody, #lfrtanfhru tfoot, #lfrtanfhru tr, #lfrtanfhru td, #lfrtanfhru th {
   border-style: none;
 }
 
-#nlywrrnsld p {
+#lfrtanfhru p {
   margin: 0;
   padding: 0;
 }
 
-#nlywrrnsld .gt_table {
+#lfrtanfhru .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -457,12 +453,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_caption {
+#lfrtanfhru .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#nlywrrnsld .gt_title {
+#lfrtanfhru .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -474,7 +470,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#nlywrrnsld .gt_subtitle {
+#lfrtanfhru .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -486,7 +482,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#nlywrrnsld .gt_heading {
+#lfrtanfhru .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -498,13 +494,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_bottom_border {
+#lfrtanfhru .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_col_headings {
+#lfrtanfhru .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -519,7 +515,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_col_heading {
+#lfrtanfhru .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -539,7 +535,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#nlywrrnsld .gt_column_spanner_outer {
+#lfrtanfhru .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -551,15 +547,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#nlywrrnsld .gt_column_spanner_outer:first-child {
+#lfrtanfhru .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nlywrrnsld .gt_column_spanner_outer:last-child {
+#lfrtanfhru .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nlywrrnsld .gt_column_spanner {
+#lfrtanfhru .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -571,11 +567,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#nlywrrnsld .gt_spanner_row {
+#lfrtanfhru .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#nlywrrnsld .gt_group_heading {
+#lfrtanfhru .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -601,7 +597,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-#nlywrrnsld .gt_empty_group_heading {
+#lfrtanfhru .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -616,15 +612,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#nlywrrnsld .gt_from_md > :first-child {
+#lfrtanfhru .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nlywrrnsld .gt_from_md > :last-child {
+#lfrtanfhru .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nlywrrnsld .gt_row {
+#lfrtanfhru .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -643,7 +639,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#nlywrrnsld .gt_stub {
+#lfrtanfhru .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -656,7 +652,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#nlywrrnsld .gt_stub_row_group {
+#lfrtanfhru .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -670,15 +666,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#nlywrrnsld .gt_row_group_first td {
+#lfrtanfhru .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nlywrrnsld .gt_row_group_first th {
+#lfrtanfhru .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#nlywrrnsld .gt_summary_row {
+#lfrtanfhru .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -688,16 +684,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#nlywrrnsld .gt_first_summary_row {
+#lfrtanfhru .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_first_summary_row.thick {
+#lfrtanfhru .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nlywrrnsld .gt_last_summary_row {
+#lfrtanfhru .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -707,7 +703,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_grand_summary_row {
+#lfrtanfhru .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -717,7 +713,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#nlywrrnsld .gt_first_grand_summary_row {
+#lfrtanfhru .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -727,7 +723,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_last_grand_summary_row_top {
+#lfrtanfhru .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -737,11 +733,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_striped {
+#lfrtanfhru .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nlywrrnsld .gt_table_body {
+#lfrtanfhru .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -750,7 +746,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_footnotes {
+#lfrtanfhru .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -764,7 +760,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_footnote {
+#lfrtanfhru .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -773,7 +769,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#nlywrrnsld .gt_sourcenotes {
+#lfrtanfhru .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -787,7 +783,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#nlywrrnsld .gt_sourcenote {
+#lfrtanfhru .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -795,63 +791,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#nlywrrnsld .gt_left {
+#lfrtanfhru .gt_left {
   text-align: left;
 }
 
-#nlywrrnsld .gt_center {
+#lfrtanfhru .gt_center {
   text-align: center;
 }
 
-#nlywrrnsld .gt_right {
+#lfrtanfhru .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nlywrrnsld .gt_font_normal {
+#lfrtanfhru .gt_font_normal {
   font-weight: normal;
 }
 
-#nlywrrnsld .gt_font_bold {
+#lfrtanfhru .gt_font_bold {
   font-weight: bold;
 }
 
-#nlywrrnsld .gt_font_italic {
+#lfrtanfhru .gt_font_italic {
   font-style: italic;
 }
 
-#nlywrrnsld .gt_super {
+#lfrtanfhru .gt_super {
   font-size: 65%;
 }
 
-#nlywrrnsld .gt_footnote_marks {
+#lfrtanfhru .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#nlywrrnsld .gt_asterisk {
+#lfrtanfhru .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nlywrrnsld .gt_indent_1 {
+#lfrtanfhru .gt_indent_1 {
   text-indent: 5px;
 }
 
-#nlywrrnsld .gt_indent_2 {
+#lfrtanfhru .gt_indent_2 {
   text-indent: 10px;
 }
 
-#nlywrrnsld .gt_indent_3 {
+#lfrtanfhru .gt_indent_3 {
   text-indent: 15px;
 }
 
-#nlywrrnsld .gt_indent_4 {
+#lfrtanfhru .gt_indent_4 {
   text-indent: 20px;
 }
 
-#nlywrrnsld .gt_indent_5 {
+#lfrtanfhru .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -877,14 +873,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td headers="value_2021" class="gt_row gt_right">$164B</td>
 <td headers="value_max_2021" class="gt_row gt_right">$164B</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">100%</td>
-<td headers="cum_pct" class="gt_row gt_right">51%</td>
+<td headers="cum_pct" class="gt_row gt_right">50%</td>
 <td headers="rowid" class="gt_row gt_right">1</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Black-Coal</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$97B</td>
 <td headers="value_max_2021" class="gt_row gt_right">$101B</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">96%</td>
-<td headers="cum_pct" class="gt_row gt_right">81%</td>
+<td headers="cum_pct" class="gt_row gt_right">80%</td>
 <td headers="rowid" class="gt_row gt_right">2</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Gold</td>
 <td headers="units_price" class="gt_row gt_left">$/kg</td>
@@ -912,7 +908,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td headers="value_2021" class="gt_row gt_right">$5B</td>
 <td headers="value_max_2021" class="gt_row gt_right">$6B</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">91%</td>
-<td headers="cum_pct" class="gt_row gt_right">95%</td>
+<td headers="cum_pct" class="gt_row gt_right">94%</td>
 <td headers="rowid" class="gt_row gt_right">6</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Nickel</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
@@ -935,139 +931,153 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td headers="value_pct_of_max" class="gt_row gt_right">100%</td>
 <td headers="cum_pct" class="gt_row gt_right">98%</td>
 <td headers="rowid" class="gt_row gt_right">9</td></tr>
+    <tr><td headers="product_name" class="gt_row gt_left">Rare-earths</td>
+<td headers="units_price" class="gt_row gt_left">$/t</td>
+<td headers="value_2021" class="gt_row gt_right">$2B</td>
+<td headers="value_max_2021" class="gt_row gt_right">$2B</td>
+<td headers="value_pct_of_max" class="gt_row gt_right">100%</td>
+<td headers="cum_pct" class="gt_row gt_right">98%</td>
+<td headers="rowid" class="gt_row gt_right">10</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Lead</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$1B</td>
 <td headers="value_max_2021" class="gt_row gt_right">$2B</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">71%</td>
-<td headers="cum_pct" class="gt_row gt_right">99%</td>
-<td headers="rowid" class="gt_row gt_right">10</td></tr>
+<td headers="cum_pct" class="gt_row gt_right">98%</td>
+<td headers="rowid" class="gt_row gt_right">11</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Silver</td>
 <td headers="units_price" class="gt_row gt_left">$/kg</td>
 <td headers="value_2021" class="gt_row gt_right">$1B</td>
 <td headers="value_max_2021" class="gt_row gt_right">$2B</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">76%</td>
 <td headers="cum_pct" class="gt_row gt_right">99%</td>
-<td headers="rowid" class="gt_row gt_right">11</td></tr>
+<td headers="rowid" class="gt_row gt_right">12</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Manganese</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$1B</td>
 <td headers="value_max_2021" class="gt_row gt_right">$6B</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">23%</td>
 <td headers="cum_pct" class="gt_row gt_right">99%</td>
-<td headers="rowid" class="gt_row gt_right">12</td></tr>
+<td headers="rowid" class="gt_row gt_right">13</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Uranium</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$384M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$1B</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">37%</td>
-<td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">13</td></tr>
+<td headers="cum_pct" class="gt_row gt_right">99%</td>
+<td headers="rowid" class="gt_row gt_right">14</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Cobalt</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$380M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$503M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">75%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">14</td></tr>
+<td headers="rowid" class="gt_row gt_right">15</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Tin</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$377M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$377M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">100%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">15</td></tr>
+<td headers="rowid" class="gt_row gt_right">16</td></tr>
+    <tr><td headers="product_name" class="gt_row gt_left">Synthetic-rutile</td>
+<td headers="units_price" class="gt_row gt_left">$/t</td>
+<td headers="value_2021" class="gt_row gt_right">$238M</td>
+<td headers="value_max_2021" class="gt_row gt_right">$490M</td>
+<td headers="value_pct_of_max" class="gt_row gt_right">49%</td>
+<td headers="cum_pct" class="gt_row gt_right">100%</td>
+<td headers="rowid" class="gt_row gt_right">17</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Diamonds</td>
 <td headers="units_price" class="gt_row gt_left">$/carat</td>
 <td headers="value_2021" class="gt_row gt_right">$230M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$926M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">25%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">16</td></tr>
+<td headers="rowid" class="gt_row gt_right">18</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Garnet</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$140M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$399M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">35%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">17</td></tr>
+<td headers="rowid" class="gt_row gt_right">19</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Ilmenite</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$127M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$206M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">62%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">18</td></tr>
+<td headers="rowid" class="gt_row gt_right">20</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Rutile</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$123M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$303M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">40%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">19</td></tr>
+<td headers="rowid" class="gt_row gt_right">21</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Antimony</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$58M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$73M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">78%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">20</td></tr>
+<td headers="rowid" class="gt_row gt_right">22</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Phosphate-rock</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$44M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$317M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">14%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">21</td></tr>
+<td headers="rowid" class="gt_row gt_right">23</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Tantalum</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$24M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$441M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">5%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">22</td></tr>
+<td headers="rowid" class="gt_row gt_right">24</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Leucoxene</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$22M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$32M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">68%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">23</td></tr>
+<td headers="rowid" class="gt_row gt_right">25</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Tungsten</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">$3M</td>
 <td headers="value_max_2021" class="gt_row gt_right">$56M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">5%</td>
 <td headers="cum_pct" class="gt_row gt_right">100%</td>
-<td headers="rowid" class="gt_row gt_right">24</td></tr>
+<td headers="rowid" class="gt_row gt_right">26</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Chromium</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">—</td>
 <td headers="value_max_2021" class="gt_row gt_right">$1B</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">—</td>
 <td headers="cum_pct" class="gt_row gt_right">—</td>
-<td headers="rowid" class="gt_row gt_right">25</td></tr>
+<td headers="rowid" class="gt_row gt_right">27</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Graphite</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">—</td>
 <td headers="value_max_2021" class="gt_row gt_right">$3M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">—</td>
 <td headers="cum_pct" class="gt_row gt_right">—</td>
-<td headers="rowid" class="gt_row gt_right">26</td></tr>
+<td headers="rowid" class="gt_row gt_right">28</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Molybdenum</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">—</td>
 <td headers="value_max_2021" class="gt_row gt_right">$3M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">—</td>
 <td headers="cum_pct" class="gt_row gt_right">—</td>
-<td headers="rowid" class="gt_row gt_right">27</td></tr>
+<td headers="rowid" class="gt_row gt_right">29</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Monazite</td>
 <td headers="units_price" class="gt_row gt_left">$/t</td>
 <td headers="value_2021" class="gt_row gt_right">—</td>
 <td headers="value_max_2021" class="gt_row gt_right">$10M</td>
 <td headers="value_pct_of_max" class="gt_row gt_right">—</td>
 <td headers="cum_pct" class="gt_row gt_right">—</td>
-<td headers="rowid" class="gt_row gt_right">28</td></tr>
+<td headers="rowid" class="gt_row gt_right">30</td></tr>
   </tbody>
   <tfoot class="gt_sourcenotes">
     <tr>

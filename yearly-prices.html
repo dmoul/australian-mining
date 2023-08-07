@@ -261,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p><br></p>
-<p>But after adjusting for inflation (using constant 2021 dollars) we can see that commodity prices generally are not near their peak, and some prices have been in long-term decline (Tungsten, Alumina, and Bauxite).</p>
+<p>However, after adjusting for inflation (using constant 2021 dollars) we can see that commodity prices generally are not near their peak, and some prices have been in long-term decline, for example: Tungsten, Alumina, and Bauxite.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -297,7 +297,7 @@ Note
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> product_price, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">glue</span>(<span class="st">"Australian mining prices (2021 dollars)"</span>),</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Highest to lowest volumne"</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Highest to lowest prices"</span>,</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"AUD (2021 dollars) Y axis scale varies"</span>,</span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> my_caption</span>
@@ -315,7 +315,7 @@ Note
 <p><br></p>
 <section id="price-by-production-volume" class="level2 page-columns page-full" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="price-by-production-volume"><span class="header-section-number">3.1</span> Price by production volume</h2>
-<p>Does production volume go up when prices go up (mine owners are more motivated to produce more, or it becomes economical to mine previously marginal deposits)? Or do prices go down when volume goes up (perhaps demand is satisfied, leading to lower prices)? The answer appears to be mixed. For some (Gold, Lithium, Chromium, Iron ore) demand and production volume have been positively correlated in recent years. Some are negatively correlated (Uranium, Bauxite).</p>
+<p>Does production volume go up when prices go up (mine owners are more motivated to produce more, or it becomes economical to mine previously marginal deposits)? Or do prices go down when volume goes up (perhaps demand is satisfied, leading to lower prices)? The answer is mixed. Gold, Lithium, Chromium, and Iron ore demand and production volume have been positively correlated in recent years. Uranium and Bauxite demand and production volume have been negatively correlated.</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Show the code</summary>

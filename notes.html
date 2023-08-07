@@ -208,7 +208,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#source-data-and-description" id="toc-source-data-and-description" class="nav-link active" data-scroll-target="#source-data-and-description">Source data and description</a></li>
   <li><a href="#sec-notes-sheet" id="toc-sec-notes-sheet" class="nav-link" data-scroll-target="#sec-notes-sheet">From the Notes sheet</a></li>
-  <li><a href="#annual-data-sheet" id="toc-annual-data-sheet" class="nav-link" data-scroll-target="#annual-data-sheet">“Annual data” sheet</a></li>
+  <li><a href="#annual-data-sheet" id="toc-annual-data-sheet" class="nav-link" data-scroll-target="#annual-data-sheet">“Annual data” sheet</a>
+  <ul class="collapse">
+  <li><a href="#data-cleaning-to-report-on-less-common-elements" id="toc-data-cleaning-to-report-on-less-common-elements" class="nav-link" data-scroll-target="#data-cleaning-to-report-on-less-common-elements">Data cleaning to report on less common elements</a></li>
+  </ul></li>
   <li><a href="#sec-triangulating" id="toc-sec-triangulating" class="nav-link" data-scroll-target="#sec-triangulating">Triangulating with more authoritative sources</a></li>
   <li><a href="#adjusting-for-inflation" id="toc-adjusting-for-inflation" class="nav-link" data-scroll-target="#adjusting-for-inflation">Adjusting for inflation</a></li>
   </ul>
@@ -261,7 +264,7 @@ QLD
 kg Au</code></pre>
 <p>becomes <code>Gold_QLD_kg AU</code>.</p>
 <p>This works everywhere except the <span class="math inline">\(ThO_2\)</span> phosphate mineral <code>Monazite_WA_%ThO2</code>, which is repeated in columns 353 and 358 row 10. The first time it refers to <a href="https://en.wikipedia.org/wiki/Monazite">monazite</a> but the second time to monazite in WA grouped with xenotime (both “…are sometimes grouped in the informal ‘anhydrous phosphates’ group”) <a href="https://en.wikipedia.org/wiki/Xenotime">xenotime</a>. So I manually appended “xenotime” in cell MT10 to get <code>Monazite_WA_%ThO2_xenotime</code>.</p>
-<p>Although I eventually excluded these items, in order to parse the spreadsheet, I un-merged cells in row 8 and copied the relevant string to each of the merged cells:</p>
+<p>Although I eventually excluded the following items, in order to parse the spreadsheet, I un-merged cells in row 8 and copied the relevant string to each of the merged cells:</p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Placer_deposit">Placer</a> Platinum Group Elements (PGEs) in GW8:HA8</li>
 <li>Placer <a href="https://en.wikipedia.org/wiki/Osmiridium">Osmiridium</a> in HB8:HF8</li>
@@ -270,8 +273,24 @@ kg Au</code></pre>
 <li><a href="https://en.wikipedia.org/wiki/Platinum_group">Platinum Group</a> Elements by Individual Element in HO8:HT8</li>
 </ul>
 <p>Data for diamonds in 2021 is missing (cells BT233, BV233, BX233). Since production has been on a downward trend since 2017, I estimated 2021 production by averaging the decline the prior two years and subtracting it from 2020 production.</p>
-<p>In the spreadsheet Ilminite in year 1932 (cell JV144) has character data rather than number in the cell, which converted to NA (missing data). “Ilmenite is the most important ore of titanium and the main source of titanium dioxide, which is used in paints, printing inks, fabrics, plastics, paper, sunscreen, food and cosmetics.”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>In the spreadsheet Ilmenite in year 1932 (cell JV144) has character data rather than number in the cell, which converted to NA (missing data). “Ilmenite is the most important ore of titanium and the main source of titanium dioxide, which is used in paints, printing inks, fabrics, plastics, paper, sunscreen, food and cosmetics.”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>I used the “Australia” summary columns, but not the additional columns labeled ‘ABARE’. From the “Notes” page of the spreadsheet: ABARE is a principal national reference for quarterly and annual statistics:</p>
+<ul>
+<li>ABARE, Australian Mineral Statistics (quarterly journal). Australian Bureau of Agricultural and Resource Economics (ABARE; now Australian Bureau of Agricultural and Resource Economics &amp; Sciences), Canberra, ACT, Australia, Years 1988 to 2011.</li>
+<li>ABARE, Australian Commodity Statistics (annual series). Australian Bureau of Agricultural and Resource Economics (ABARE; now Australian Bureau of Agricultural and Resource Economics &amp; Sciences), Canberra, ACT, Australia, Years 1995 to 2010 (formerly Commodity Statistical Bulletin, 1986-1994).</li>
+</ul>
 <p><br></p>
+<section id="data-cleaning-to-report-on-less-common-elements" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning-to-report-on-less-common-elements">Data cleaning to report on less common elements</h3>
+<ul>
+<li>“Rare Earths” (HZ8:IA:8)</li>
+<li>Garnet (JD8:JE8)</li>
+<li>Rutile (LC8:LD8) is <span class="math inline">\(TiO_2\)</span> most commonly used in sunscreens and smelting Titanium metal<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</li>
+<li>Synthetic Rutile (LH8, LJ8) from WA only (no ‘Australia’ columns); it’s typically made from Ilmenite.</li>
+</ul>
+<p>I skipped the following due to missing price data or limited volume data * “Platinum Group Elements by Individual Element” (HO8:HT8) would be the best set of columns to use for PGEs, however there is no pricing data. Note that some have not been mined since the 1950s * Niobium (IU8) ( there is no price column) * admium (IZ8) ( there is no price column and not mined since 2004) * Zircon there os no $/t for all of Australia, and data is incomplete; prices diverge signficantly in the various states * Bismuth (not mined since 1984)</p>
+<p><br></p>
+</section>
 </section>
 <section id="sec-triangulating" class="level2">
 <h2 class="anchored" data-anchor-id="sec-triangulating">Triangulating with more authoritative sources</h2>
@@ -282,8 +301,8 @@ kg Au</code></pre>
 <li>Percentages of total production won’t match exactly, since I excluded <a href="https://en.wikipedia.org/wiki/Platinum_group">Platinum Group</a> Elements (PGEs), <a href="https://en.wikipedia.org/wiki/Rare-earth_element">Rare Earth Elements</a>, Niobium, Bismuth, Gallium, and Vanadium due to small quantities mined, insufficient data points, incomplete data series as noted by the author, or the need for more involved data preparation to present them accurately.</li>
 <li>Mudd made some generalizing assumptions documented in <em>A Comprehensive dataset for Australian mine production 1799 to 2021</em> and in the master spreadsheet. See <a href="#sec-notes-sheet"><span>Section&nbsp;2</span></a> in the Notes.</li>
 </ul>
-<p>For example, <em>Australia Iron Ore Mining Market by Reserves and Production, Assets and Projects, Fiscal Regime including Taxes and Royalties, Key Players and Forecast, 2021-2026</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> reports Australian iron ore market in 2021 was 922.2 Mt. This matches Mudd’s 2021 amount.</p>
-<p>Compared to <em>World Mining Data 2022</em><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> (which has 2020 data whereas I’m working with 2021 data)</p>
+<p>For example, <em>Australia Iron Ore Mining Market by Reserves and Production, Assets and Projects, Fiscal Regime including Taxes and Royalties, Key Players and Forecast, 2021-2026</em><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> reports Australian iron ore market in 2021 was 922.2 Mt. This matches Mudd’s 2021 amount.</p>
+<p>Compared to <em>World Mining Data 2022</em><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> (which has 2020 data whereas I’m working with 2021 data)</p>
 <ul>
 <li>My numbers are in similar ranges for the production of Cobalt, Nickel, Tungsten, Bauxite, Copper, Lead, Tin, Zinc, Gold, Silver</li>
 <li>For Manganese and Tantalum I report about 200%</li>
@@ -323,8 +342,9 @@ kg Au</code></pre>
 <hr>
 <ol>
 <li id="fn1"><p><a href="https://en.wikipedia.org/wiki/Ilmenite" class="uri">https://en.wikipedia.org/wiki/Ilmenite</a> <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><a href="https://www.globaldata.com/store/report/australia-iron-ore-mining-market-analysis/" class="uri">https://www.globaldata.com/store/report/australia-iron-ore-mining-market-analysis/</a> <a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p><a href="https://www.world-mining-data.info/wmd/downloads/PDF/WMD2022.pdf" class="uri">https://www.world-mining-data.info/wmd/downloads/PDF/WMD2022.pdf</a> volume 37. page 201-202. Published by the Austrian Federal Ministry of Agriculture, Regions and Tourism Stubenring 1, 1010 Vienna, on behalf of the International Organizing Committee for the World Mining Congress <a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://en.wikipedia.org/wiki/Rutile" class="uri">https://en.wikipedia.org/wiki/Rutile</a> <a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://www.globaldata.com/store/report/australia-iron-ore-mining-market-analysis/" class="uri">https://www.globaldata.com/store/report/australia-iron-ore-mining-market-analysis/</a> <a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://www.world-mining-data.info/wmd/downloads/PDF/WMD2022.pdf" class="uri">https://www.world-mining-data.info/wmd/downloads/PDF/WMD2022.pdf</a> volume 37. page 201-202. Published by the Austrian Federal Ministry of Agriculture, Regions and Tourism Stubenring 1, 1010 Vienna, on behalf of the International Organizing Committee for the World Mining Congress <a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

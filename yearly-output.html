@@ -220,47 +220,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p>There is great variation in the amount of commodity production both over time and among the commodities. These dynamics are the focus of this chapter. Most mass units are metric tonnes (t). Gold and silver are measured in kg, and diamonds are measured in carets.</p>
+<p>There is great variation in the amount produced both over time and among the commodities. These dynamics are the focus of this chapter. Most mass units are metric tonnes (t). Gold and silver are measured in kg, and diamonds are measured in carets.</p>
 <p><br></p>
-<section id="contributions-in-2021-to-total-amount-extracted" class="level2" data-number="1.1">
+<section id="contributions-in-2021-to-total-amount-extracted" class="level2 page-columns page-full" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="contributions-in-2021-to-total-amount-extracted"><span class="header-section-number">1.1</span> Contributions in 2021 to total amount extracted</h2>
-<p>In <a href="#fig-amount-2021">Figure&nbsp;<span>1.1</span></a> I use a log scale on the left plot, since the range is very wide.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">##| column: page-inset-right</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>product_levels <span class="ot">&lt;-</span> dta_yearly_long <span class="sc">|&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(mass)) <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> mass, <span class="at">n =</span> <span class="dv">1</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> product_mass) <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(mass)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>dta_yearly_long <span class="sc">|&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(product_levels <span class="sc">|&gt;</span> <span class="fu">select</span>(product_mass),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="st">"product_mass"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">product_mass =</span> <span class="fu">factor</span>(product_mass, <span class="at">levels =</span> product_levels<span class="sc">$</span>product_mass)) <span class="sc">|&gt;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, mass, <span class="at">label =</span> product_mass, <span class="at">color =</span> product_mass)) <span class="sc">+</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">direction =</span> <span class="st">"x"</span>, <span class="at">min.segment.length =</span> <span class="dv">10000</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                   <span class="at">max.overlaps =</span> <span class="dv">10</span>, <span class="at">max.iter =</span> <span class="dv">10000</span>) <span class="sc">+</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1900</span>, <span class="dv">1950</span>, <span class="dv">2000</span>)) <span class="sc">+</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">scale_cut =</span> <span class="fu">cut_short_scale</span>()),</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">'Australian mine output in 2021'</span>,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#subtitle = glue("Relative commodity amount"),</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Amount (log10 scale)"</span>,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> my_caption</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>product_levels <span class="ot">&lt;-</span> dta_yearly_long <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(mass)) <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> mass, <span class="at">n =</span> <span class="dv">1</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> product_mass) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(mass)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>data_for_plot <span class="ot">&lt;-</span> dta_yearly_long <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, mass, product_mass) <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(product_levels <span class="sc">|&gt;</span> <span class="fu">select</span>(product_mass),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="st">"product_mass"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">product_mass =</span> <span class="fu">factor</span>(product_mass, <span class="at">levels =</span> product_levels<span class="sc">$</span>product_mass)) </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>powers_of_ten <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">log10</span>(<span class="fu">max</span>(data_for_plot<span class="sc">$</span>mass) <span class="sc">/</span> <span class="fu">min</span>(data_for_plot<span class="sc">$</span>mass)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
+</div>
+<p>In <a href="#fig-amount-2021">Figure&nbsp;<span>1.1</span></a> the range of output varies by 7 powers of 10: from 89 to 922,159,323.</p>
+<div class="cell page-columns page-full">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_for_plot <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, mass, <span class="at">label =</span> product_mass, <span class="at">color =</span> product_mass)) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">direction =</span> <span class="st">"x"</span>, <span class="at">min.segment.length =</span> <span class="dv">100000</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">max.overlaps =</span> <span class="dv">10</span>, <span class="at">max.iter =</span> <span class="dv">100000</span>) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1900</span>, <span class="dv">1950</span>, <span class="dv">2000</span>)) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">scale_cut =</span> <span class="fu">cut_short_scale</span>()),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">'Australian mine output in 2021'</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Amount (log10 scale)"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> my_caption</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display column-page-inset-right">
 <div id="fig-amount-2021" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="yearly-output_files/figure-html/fig-amount-2021-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="yearly-output_files/figure-html/fig-amount-2021-1.png" class="img-fluid figure-img" width="960"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;1.1: Amount extracted in 2021</figcaption><p></p>
 </figure>
 </div>
@@ -277,28 +283,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell page-columns page-full">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>product_levels <span class="ot">&lt;-</span> dta_yearly_long <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mass)) <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> mass, <span class="at">n =</span> <span class="dv">1</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> product_mass) <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mass)) <span class="sc">|&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(product_mass)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>dta_yearly_long <span class="sc">|&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">product_mass =</span> <span class="fu">factor</span>(product_mass, <span class="at">levels =</span> product_levels)) <span class="sc">|&gt;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, mass, <span class="at">color =</span> product_mass)) <span class="sc">+</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1900</span>, <span class="dv">1950</span>, <span class="dv">2000</span>)) <span class="sc">+</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">scale_cut =</span> <span class="fu">cut_short_scale</span>()),</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> product_mass, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">glue</span>(<span class="st">"Australian mining output"</span>),</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">glue</span>(<span class="st">"Arranged by highest to lowest peak amounts {year_first}-{year_last}"</span>),</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Amount (Y axis scale varies)"</span>,</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> my_caption</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>product_levels <span class="ot">&lt;-</span> dta_yearly_long <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mass)) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> mass, <span class="at">n =</span> <span class="dv">1</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> product_mass) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mass)) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(product_mass)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>dta_yearly_long <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">product_mass =</span> <span class="fu">factor</span>(product_mass, <span class="at">levels =</span> product_levels)) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, mass, <span class="at">color =</span> product_mass)) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1900</span>, <span class="dv">1950</span>, <span class="dv">2000</span>)) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">scale_cut =</span> <span class="fu">cut_short_scale</span>()),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> product_mass, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">glue</span>(<span class="st">"Australian mining output"</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">glue</span>(<span class="st">"Arranged by highest to lowest peak amounts {year_first}-{year_last}"</span>),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Amount (Y axis scale varies)"</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> my_caption</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display column-screen-inset-right">
 <div id="fig-output-over-time" class="quarto-figure quarto-figure-center anchored">
@@ -318,42 +324,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>It’s distressing in these days of global warming that black coal production is near its peak. According to Geosciences Australia, a government agency, Japan is the the destination of more Australian coal then any other country, followed by China (assuming post-COVID-19 industrial activity returns to trend), then India, South Korea, and Taiwan. See Figure 9<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</li>
 <li>The main use of Bauxite and Alumina is in aluminium smelting. Another name for alumina is <a href="https://en.wikipedia.org/wiki/Aluminium_oxide">aluminium oxide</a> (<span class="math inline">\(Al_2O_3\)</span>) and Aluminium(III) oxide<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. In North American English <em>aluminium</em> is <em>aluminum</em>.</li>
-<li>Given the insatiable demand for batteries, it’s not surprising that lithium mining has increased dramatically over the last 30-40 years.</li>
+<li>Given the insatiable demand for batteries and magnets for electric vehicles and other electronic applications, it’s not surprising that mining of lithium and rare earth elements has increased dramatically over the last 30-40 years.</li>
 </ul>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>peak_products <span class="ot">&lt;-</span> dta_yearly_long <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="fu">max</span>(year, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&amp;</span> mass <span class="sc">&gt;=</span> mass_max <span class="sc">*</span> peak_production_cutoff) </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>data_for_plot <span class="ot">&lt;-</span> dta_yearly_long <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(peak_products <span class="sc">%&gt;%</span> <span class="fu">select</span>(product_mass),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="st">"product_mass"</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>labels_for_plot <span class="ot">&lt;-</span> data_for_plot <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mass)) <span class="sc">|&gt;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">final_year =</span> <span class="fu">max</span>(year),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">.by =</span> product_mass) <span class="sc">|&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="fu">max</span>(year),</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">.by =</span> product_mass)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>data_for_plot <span class="sc">|&gt;</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, mass, <span class="at">color =</span> product_mass, <span class="at">group =</span> product_mass)) <span class="sc">+</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> labels_for_plot,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(<span class="fu">max</span>(year) <span class="sc">+</span> <span class="dv">30</span>, mass, <span class="at">label =</span> product_mass),</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">direction =</span> <span class="st">"y"</span>, <span class="at">force =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1850</span>, <span class="dv">1900</span>, <span class="dv">1950</span>, <span class="dv">2000</span>)) <span class="sc">+</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">scale_cut =</span> <span class="fu">cut_short_scale</span>()),</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">glue</span>(<span class="st">"Commodities near peak output in Australia"</span>),</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">glue</span>(<span class="st">"{year_first}-{year_last}"</span>),</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Amount (log10 scale)"</span>,</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> my_caption</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>peak_products <span class="ot">&lt;-</span> dta_yearly_long <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="fu">max</span>(year, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&amp;</span> mass <span class="sc">&gt;=</span> mass_max <span class="sc">*</span> peak_production_cutoff) </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>data_for_plot <span class="ot">&lt;-</span> dta_yearly_long <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(peak_products <span class="sc">%&gt;%</span> <span class="fu">select</span>(product_mass),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="st">"product_mass"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>labels_for_plot <span class="ot">&lt;-</span> data_for_plot <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mass)) <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">final_year =</span> <span class="fu">max</span>(year),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">.by =</span> product_mass) <span class="sc">|&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="fu">max</span>(year),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">.by =</span> product_mass)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>data_for_plot <span class="sc">|&gt;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, mass, <span class="at">color =</span> product_mass, <span class="at">group =</span> product_mass)) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> labels_for_plot,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(<span class="fu">max</span>(year) <span class="sc">+</span> <span class="dv">30</span>, mass, <span class="at">label =</span> product_mass),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">direction =</span> <span class="st">"y"</span>, <span class="at">force =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1850</span>, <span class="dv">1900</span>, <span class="dv">1950</span>, <span class="dv">2000</span>)) <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">scale_cut =</span> <span class="fu">cut_short_scale</span>()),</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">glue</span>(<span class="st">"Commodities near peak output in Australia"</span>),</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">glue</span>(<span class="st">"{year_first}-{year_last}"</span>),</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Amount (log10 scale)"</span>,</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> my_caption</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-output-yearly-at-peak" class="quarto-figure quarto-figure-center anchored">
@@ -371,44 +377,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dta_yearly_long <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(product_name, units_mass, mass, mass_max, mass_pct_of_max) <span class="sc">|&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mass), <span class="fu">desc</span>(mass_max)) <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cum_pct =</span> <span class="fu">cumsum</span>(mass <span class="sc">/</span> <span class="fu">sum</span>(mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowid =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="fu">md</span>(<span class="st">"**Australian mining output 2021**"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(mass, mass_max),</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">decimals =</span> <span class="dv">0</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">suffixing =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_percent</span>(<span class="at">columns =</span> mass_pct_of_max,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_percent</span>(<span class="at">columns =</span> cum_pct,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">decimals =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sub_missing</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(<span class="fu">md</span>(<span class="st">"*Data: Gavin Mudd. Analysis: Daniel Moul*"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dta_yearly_long <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(product_name, units_mass, mass, mass_max, mass_pct_of_max) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mass), <span class="fu">desc</span>(mass_max)) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cum_pct =</span> <span class="fu">cumsum</span>(mass <span class="sc">/</span> <span class="fu">sum</span>(mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowid =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="fu">md</span>(<span class="st">"**Australian mining output 2021**"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(mass, mass_max),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">decimals =</span> <span class="dv">0</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">suffixing =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_percent</span>(<span class="at">columns =</span> mass_pct_of_max,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_percent</span>(<span class="at">columns =</span> cum_pct,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">decimals =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sub_missing</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(<span class="fu">md</span>(<span class="st">"*Data: Gavin Mudd. Analysis: Daniel Moul*"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="tbl-summary-mass-2021" class="anchored">
 
-<div id="tzekbaawkr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tzekbaawkr table {
+<div id="mmcaefamtn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mmcaefamtn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#tzekbaawkr thead, #tzekbaawkr tbody, #tzekbaawkr tfoot, #tzekbaawkr tr, #tzekbaawkr td, #tzekbaawkr th {
+#mmcaefamtn thead, #mmcaefamtn tbody, #mmcaefamtn tfoot, #mmcaefamtn tr, #mmcaefamtn td, #mmcaefamtn th {
   border-style: none;
 }
 
-#tzekbaawkr p {
+#mmcaefamtn p {
   margin: 0;
   padding: 0;
 }
 
-#tzekbaawkr .gt_table {
+#mmcaefamtn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -434,12 +440,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_caption {
+#mmcaefamtn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#tzekbaawkr .gt_title {
+#mmcaefamtn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -451,7 +457,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#tzekbaawkr .gt_subtitle {
+#mmcaefamtn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -463,7 +469,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#tzekbaawkr .gt_heading {
+#mmcaefamtn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -475,13 +481,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_bottom_border {
+#mmcaefamtn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_col_headings {
+#mmcaefamtn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -496,7 +502,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_col_heading {
+#mmcaefamtn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -516,7 +522,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#tzekbaawkr .gt_column_spanner_outer {
+#mmcaefamtn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -528,15 +534,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#tzekbaawkr .gt_column_spanner_outer:first-child {
+#mmcaefamtn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tzekbaawkr .gt_column_spanner_outer:last-child {
+#mmcaefamtn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tzekbaawkr .gt_column_spanner {
+#mmcaefamtn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -548,11 +554,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#tzekbaawkr .gt_spanner_row {
+#mmcaefamtn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#tzekbaawkr .gt_group_heading {
+#mmcaefamtn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -578,7 +584,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-#tzekbaawkr .gt_empty_group_heading {
+#mmcaefamtn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -593,15 +599,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#tzekbaawkr .gt_from_md > :first-child {
+#mmcaefamtn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tzekbaawkr .gt_from_md > :last-child {
+#mmcaefamtn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tzekbaawkr .gt_row {
+#mmcaefamtn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -620,7 +626,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#tzekbaawkr .gt_stub {
+#mmcaefamtn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -633,7 +639,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#tzekbaawkr .gt_stub_row_group {
+#mmcaefamtn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -647,15 +653,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#tzekbaawkr .gt_row_group_first td {
+#mmcaefamtn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#tzekbaawkr .gt_row_group_first th {
+#mmcaefamtn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#tzekbaawkr .gt_summary_row {
+#mmcaefamtn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -665,16 +671,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#tzekbaawkr .gt_first_summary_row {
+#mmcaefamtn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_first_summary_row.thick {
+#mmcaefamtn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#tzekbaawkr .gt_last_summary_row {
+#mmcaefamtn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -684,7 +690,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_grand_summary_row {
+#mmcaefamtn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -694,7 +700,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#tzekbaawkr .gt_first_grand_summary_row {
+#mmcaefamtn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -704,7 +710,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_last_grand_summary_row_top {
+#mmcaefamtn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -714,11 +720,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_striped {
+#mmcaefamtn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tzekbaawkr .gt_table_body {
+#mmcaefamtn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -727,7 +733,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_footnotes {
+#mmcaefamtn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -741,7 +747,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_footnote {
+#mmcaefamtn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -750,7 +756,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#tzekbaawkr .gt_sourcenotes {
+#mmcaefamtn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -764,7 +770,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#tzekbaawkr .gt_sourcenote {
+#mmcaefamtn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -772,63 +778,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#tzekbaawkr .gt_left {
+#mmcaefamtn .gt_left {
   text-align: left;
 }
 
-#tzekbaawkr .gt_center {
+#mmcaefamtn .gt_center {
   text-align: center;
 }
 
-#tzekbaawkr .gt_right {
+#mmcaefamtn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tzekbaawkr .gt_font_normal {
+#mmcaefamtn .gt_font_normal {
   font-weight: normal;
 }
 
-#tzekbaawkr .gt_font_bold {
+#mmcaefamtn .gt_font_bold {
   font-weight: bold;
 }
 
-#tzekbaawkr .gt_font_italic {
+#mmcaefamtn .gt_font_italic {
   font-style: italic;
 }
 
-#tzekbaawkr .gt_super {
+#mmcaefamtn .gt_super {
   font-size: 65%;
 }
 
-#tzekbaawkr .gt_footnote_marks {
+#mmcaefamtn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#tzekbaawkr .gt_asterisk {
+#mmcaefamtn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#tzekbaawkr .gt_indent_1 {
+#mmcaefamtn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#tzekbaawkr .gt_indent_2 {
+#mmcaefamtn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#tzekbaawkr .gt_indent_3 {
+#mmcaefamtn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#tzekbaawkr .gt_indent_4 {
+#mmcaefamtn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#tzekbaawkr .gt_indent_5 {
+#mmcaefamtn .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -854,197 +860,211 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td headers="mass" class="gt_row gt_right">922M</td>
 <td headers="mass_max" class="gt_row gt_right">922M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">100%</td>
-<td headers="cum_pct" class="gt_row gt_right">56.75%</td>
+<td headers="cum_pct" class="gt_row gt_right">56.74%</td>
 <td headers="rowid" class="gt_row gt_right">1</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Black-Coal</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">557M</td>
 <td headers="mass_max" class="gt_row gt_right">590M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">94%</td>
-<td headers="cum_pct" class="gt_row gt_right">91.02%</td>
+<td headers="cum_pct" class="gt_row gt_right">91.00%</td>
 <td headers="rowid" class="gt_row gt_right">2</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Bauxite</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">103M</td>
 <td headers="mass_max" class="gt_row gt_right">106M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">98%</td>
-<td headers="cum_pct" class="gt_row gt_right">97.37%</td>
+<td headers="cum_pct" class="gt_row gt_right">97.36%</td>
 <td headers="rowid" class="gt_row gt_right">3</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Alumina</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">21M</td>
 <td headers="mass_max" class="gt_row gt_right">22M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">96%</td>
-<td headers="cum_pct" class="gt_row gt_right">98.66%</td>
+<td headers="cum_pct" class="gt_row gt_right">98.65%</td>
 <td headers="rowid" class="gt_row gt_right">4</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Diamonds</td>
 <td headers="units_mass" class="gt_row gt_left">carats</td>
 <td headers="mass" class="gt_row gt_right">9M</td>
 <td headers="mass_max" class="gt_row gt_right">45M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">21%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.24%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.22%</td>
 <td headers="rowid" class="gt_row gt_right">5</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Manganese</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">6M</td>
 <td headers="mass_max" class="gt_row gt_right">7M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">97%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.64%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.62%</td>
 <td headers="rowid" class="gt_row gt_right">6</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Silver</td>
 <td headers="units_mass" class="gt_row gt_left">kg</td>
 <td headers="mass" class="gt_row gt_right">1M</td>
 <td headers="mass_max" class="gt_row gt_right">2M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">55%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.72%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.70%</td>
 <td headers="rowid" class="gt_row gt_right">7</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Zinc</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">1M</td>
 <td headers="mass_max" class="gt_row gt_right">2M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">82%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.80%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.79%</td>
 <td headers="rowid" class="gt_row gt_right">8</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Copper</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">813K</td>
 <td headers="mass_max" class="gt_row gt_right">1M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">81%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.85%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.84%</td>
 <td headers="rowid" class="gt_row gt_right">9</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Lead</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">488K</td>
 <td headers="mass_max" class="gt_row gt_right">766K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">64%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.88%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.87%</td>
 <td headers="rowid" class="gt_row gt_right">10</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Ilmenite</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">449K</td>
 <td headers="mass_max" class="gt_row gt_right">1M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">30%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.91%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.89%</td>
 <td headers="rowid" class="gt_row gt_right">11</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Phosphate-rock</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">436K</td>
 <td headers="mass_max" class="gt_row gt_right">3M</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">14%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.94%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.92%</td>
 <td headers="rowid" class="gt_row gt_right">12</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Garnet</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">321K</td>
 <td headers="mass_max" class="gt_row gt_right">575K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">56%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.96%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.94%</td>
 <td headers="rowid" class="gt_row gt_right">13</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Gold</td>
 <td headers="units_mass" class="gt_row gt_left">kg</td>
 <td headers="mass" class="gt_row gt_right">312K</td>
 <td headers="mass_max" class="gt_row gt_right">328K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">95%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.98%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.96%</td>
 <td headers="rowid" class="gt_row gt_right">14</td></tr>
+    <tr><td headers="product_name" class="gt_row gt_left">Synthetic-rutile</td>
+<td headers="units_mass" class="gt_row gt_left">t</td>
+<td headers="mass" class="gt_row gt_right">262K</td>
+<td headers="mass_max" class="gt_row gt_right">726K</td>
+<td headers="mass_pct_of_max" class="gt_row gt_right">36%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.97%</td>
+<td headers="rowid" class="gt_row gt_right">15</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Nickel</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">150K</td>
 <td headers="mass_max" class="gt_row gt_right">231K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">65%</td>
-<td headers="cum_pct" class="gt_row gt_right">99.99%</td>
-<td headers="rowid" class="gt_row gt_right">15</td></tr>
+<td headers="cum_pct" class="gt_row gt_right">99.98%</td>
+<td headers="rowid" class="gt_row gt_right">16</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Rutile</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">108K</td>
 <td headers="mass_max" class="gt_row gt_right">467K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">23%</td>
 <td headers="cum_pct" class="gt_row gt_right">99.99%</td>
-<td headers="rowid" class="gt_row gt_right">16</td></tr>
+<td headers="rowid" class="gt_row gt_right">17</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Lithium</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">55K</td>
 <td headers="mass_max" class="gt_row gt_right">59K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">94%</td>
+<td headers="cum_pct" class="gt_row gt_right">99.99%</td>
+<td headers="rowid" class="gt_row gt_right">18</td></tr>
+    <tr><td headers="product_name" class="gt_row gt_left">Rare-earths</td>
+<td headers="units_mass" class="gt_row gt_left">t</td>
+<td headers="mass" class="gt_row gt_right">38K</td>
+<td headers="mass_max" class="gt_row gt_right">38K</td>
+<td headers="mass_pct_of_max" class="gt_row gt_right">100%</td>
 <td headers="cum_pct" class="gt_row gt_right">100.00%</td>
-<td headers="rowid" class="gt_row gt_right">17</td></tr>
+<td headers="rowid" class="gt_row gt_right">19</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Leucoxene</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">18K</td>
 <td headers="mass_max" class="gt_row gt_right">85K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">21%</td>
 <td headers="cum_pct" class="gt_row gt_right">100.00%</td>
-<td headers="rowid" class="gt_row gt_right">18</td></tr>
+<td headers="rowid" class="gt_row gt_right">20</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Monazite</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">16K</td>
 <td headers="mass_max" class="gt_row gt_right">18K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">89%</td>
 <td headers="cum_pct" class="gt_row gt_right">100.00%</td>
-<td headers="rowid" class="gt_row gt_right">19</td></tr>
+<td headers="rowid" class="gt_row gt_right">21</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Tin</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">9K</td>
 <td headers="mass_max" class="gt_row gt_right">12K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">70%</td>
 <td headers="cum_pct" class="gt_row gt_right">100.00%</td>
-<td headers="rowid" class="gt_row gt_right">20</td></tr>
+<td headers="rowid" class="gt_row gt_right">22</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Antimony</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">5K</td>
 <td headers="mass_max" class="gt_row gt_right">18K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">30%</td>
 <td headers="cum_pct" class="gt_row gt_right">100.00%</td>
-<td headers="rowid" class="gt_row gt_right">21</td></tr>
+<td headers="rowid" class="gt_row gt_right">23</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Cobalt</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">5K</td>
 <td headers="mass_max" class="gt_row gt_right">6K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">83%</td>
 <td headers="cum_pct" class="gt_row gt_right">100.00%</td>
-<td headers="rowid" class="gt_row gt_right">22</td></tr>
+<td headers="rowid" class="gt_row gt_right">24</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Uranium</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">4K</td>
 <td headers="mass_max" class="gt_row gt_right">11K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">36%</td>
 <td headers="cum_pct" class="gt_row gt_right">100.00%</td>
-<td headers="rowid" class="gt_row gt_right">23</td></tr>
+<td headers="rowid" class="gt_row gt_right">25</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Tantalum</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">113</td>
 <td headers="mass_max" class="gt_row gt_right">736</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">15%</td>
 <td headers="cum_pct" class="gt_row gt_right">100.00%</td>
-<td headers="rowid" class="gt_row gt_right">24</td></tr>
+<td headers="rowid" class="gt_row gt_right">26</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Tungsten</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">89</td>
 <td headers="mass_max" class="gt_row gt_right">4K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">2%</td>
 <td headers="cum_pct" class="gt_row gt_right">100.00%</td>
-<td headers="rowid" class="gt_row gt_right">25</td></tr>
+<td headers="rowid" class="gt_row gt_right">27</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Chromium</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">—</td>
 <td headers="mass_max" class="gt_row gt_right">452K</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">—</td>
 <td headers="cum_pct" class="gt_row gt_right">—</td>
-<td headers="rowid" class="gt_row gt_right">26</td></tr>
+<td headers="rowid" class="gt_row gt_right">28</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Graphite</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">—</td>
 <td headers="mass_max" class="gt_row gt_right">531</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">—</td>
 <td headers="cum_pct" class="gt_row gt_right">—</td>
-<td headers="rowid" class="gt_row gt_right">27</td></tr>
+<td headers="rowid" class="gt_row gt_right">29</td></tr>
     <tr><td headers="product_name" class="gt_row gt_left">Molybdenum</td>
 <td headers="units_mass" class="gt_row gt_left">t</td>
 <td headers="mass" class="gt_row gt_right">—</td>
 <td headers="mass_max" class="gt_row gt_right">324</td>
 <td headers="mass_pct_of_max" class="gt_row gt_right">—</td>
 <td headers="cum_pct" class="gt_row gt_right">—</td>
-<td headers="rowid" class="gt_row gt_right">28</td></tr>
+<td headers="rowid" class="gt_row gt_right">30</td></tr>
   </tbody>
   <tfoot class="gt_sourcenotes">
     <tr>
