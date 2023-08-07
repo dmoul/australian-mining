@@ -99,8 +99,10 @@ if(!file.exists(fname_prepared_data)) {
 ###### data prep ######
 
 dta_yearly_mass_value <- dta_yearly_all_columns |>
-  select(year, contains("Australia") & !contains(r"(%)") & !contains(c("Placer", "PGE", "Platinum Group", "Rare Earths", "Bismuth",
-                                                                       "Gallium", "Vanadium", "Niobium"))) |>
+  select(year, (contains("Australia") | contains("Synthetic rutile")) & 
+           !contains(r"(%)") & 
+           !contains(c("Placer", "PGE", "Bismuth", #"Rare Earths", "Platinum Group", 
+                       "Gallium", "Vanadium", "Niobium"))) |>
   mutate(across(everything(), as.double)) # convert errant strings to NA (creates warning message: NAs introduced by coercion)
 # TODO figure out why some column names aren't following the main pattern; for now those ores will be removed in the next step)
 # TODO add back in contains(c("Placer", "PGE", "Platinum Group", "Rare Earths")
@@ -112,10 +114,20 @@ my_colnames <- str_replace_all(colnames(dta_yearly_mass_value),
                                  "raw coal" = "raw-coal",
                                  "Iron Ore" = "Iron-ore",
                                  "(?i)phosphate (?i)rock" = "Phosphate-rock",
-                                 #"Platinum Group Elements by Individual Element" = "Platinum_Group_Elements",
-                                 #"Rare Earths" = "Rare_Earths",
-                                 "_Australia" = "", 
-                                 " .*" = "") 
+                                 "Platinum Group Elements by Individual Element" = "PGE-element",
+                                 "Rare Earths" = "Rare-earths",
+                                 "Synthetic Rutile" = "Synthetic-rutile",
+                                 "_Australia" = "",
+                                 "_WA" = "",
+                                 # assume missing mass units are kg; reorder text pieces
+                                 "PGE-element_kg Pt" = "PGE-Pt_kg",
+                                 "PGE-element_kg Pd" = "PGE-Pd_kg",
+                                 "PGE-element_Rh" = "PGE-Rh_kg",
+                                 "PGE-element_kg Ru" = "PGE-Ru_kg",
+                                 "PGE-element_Os" = "PGE-Os_kg",
+                                 "PGE-element_Ir" = "PGE-Ir_kg",
+                                 " .*" = ""
+                                 ) 
 )
 
 names(dta_yearly_mass_value) <- my_colnames

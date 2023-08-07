@@ -79,14 +79,14 @@ p2 <- data_for_plot |>
                                          labels = label_percent(accuracy = 1))) +
   expand_limits(x = 0) +
   labs(
-    subtitle = glue("Commodity contribution to total value (AUD {round(max_cum_value / 1e9, digits = 0)}B)"),
+    subtitle = glue("Commodity contribution to total value in 2021 (AUD {round(max_cum_value / 1e9, digits = 0)}B)"),
     x = "Cumulative value (AUD)",
     y = NULL
   )
 
 p1 + p2 +
   plot_annotation(
-    title = 'Australian mining value of products in 2021',
+    title = 'Australian mining: value of products produced in 2021',
     caption = my_caption
   )
 
@@ -94,7 +94,7 @@ p1 + p2 +
 
 <br>
 
-## Value over time by commodity
+## Yearly value by commodity
 
 ```{r, fig.height=10, fig.width=14}
 #| label: fig-value-over-time-2021-dollars
@@ -120,7 +120,7 @@ dta_yearly_long |>
   ) +
   facet_wrap(~ product_name, scales = "free_y") +
   labs(
-    title = glue("Australian mining value of products (2021 dollars)"),
+    title = glue("Australian mining yearly value of products (2021 dollars)"),
     subtitle = glue("Arranged from highest to lowest peak value. {year_first}-{year_last}"),
     x = NULL,
     y = "AUD (2021 dollars) Y axis scale varies",
@@ -133,11 +133,8 @@ dta_yearly_long |>
 
 ## Commodities at or near peak value of production
 
-For the following, the value of production in 2021 was in the top `r percent(1 - peak_production_cutoff)` of historical peak value Since the scale of the value is so wide, I use a log scale on the Y axis.
+For the following, the value of production in 2021 was within `r percent(1 - peak_production_cutoff)` of historical peak value.
 
-Some observations:
-
-* ***TODO: Add here***
 
 ```{r}
 #| label: fig-output-yearly-at-peak

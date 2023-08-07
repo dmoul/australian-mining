@@ -64,7 +64,7 @@ becomes `Gold_QLD_kg AU`.
 
 This works everywhere except the $ThO_2$ phosphate mineral `Monazite_WA_%ThO2`, which is repeated in columns 353 and 358 row 10. The first time it refers to [monazite](https://en.wikipedia.org/wiki/Monazite) but the second time to monazite in WA grouped with xenotime (both "...are sometimes grouped in the informal 'anhydrous phosphates' group") [xenotime](https://en.wikipedia.org/wiki/Xenotime). So I manually appended "xenotime" in cell MT10 to get `Monazite_WA_%ThO2_xenotime`.
 
-Although I eventually excluded these items, in order to parse the spreadsheet, I un-merged cells in row 8 and copied the relevant string to each of the merged cells:
+Although I eventually excluded the following items, in order to parse the spreadsheet, I un-merged cells in row 8 and copied the relevant string to each of the merged cells:
 
 * [Placer](https://en.wikipedia.org/wiki/Placer_deposit) Platinum Group Elements (PGEs) in GW8:HA8
 * Placer [Osmiridium](https://en.wikipedia.org/wiki/Osmiridium) in HB8:HF8
@@ -74,7 +74,28 @@ Although I eventually excluded these items, in order to parse the spreadsheet, I
 
 Data for diamonds in 2021 is missing (cells BT233, BV233, BX233). Since production has been on a downward trend since 2017, I estimated 2021 production by averaging the decline the prior two years and subtracting it from 2020 production.
 
-In the spreadsheet Ilminite in year 1932 (cell JV144) has character data rather than number in the cell, which converted to NA (missing data). "Ilmenite is the most important ore of titanium and the main source of titanium dioxide, which is used in paints, printing inks, fabrics, plastics, paper, sunscreen, food and cosmetics."^[<https://en.wikipedia.org/wiki/Ilmenite> ]
+In the spreadsheet Ilmenite in year 1932 (cell JV144) has character data rather than number in the cell, which converted to NA (missing data). "Ilmenite is the most important ore of titanium and the main source of titanium dioxide, which is used in paints, printing inks, fabrics, plastics, paper, sunscreen, food and cosmetics."^[<https://en.wikipedia.org/wiki/Ilmenite> ]
+
+I used the "Australia" summary columns, but not the additional columns labeled 'ABARE'. From the "Notes" page of the spreadsheet: ABARE is a principal national reference for quarterly and annual statistics:
+
+* ABARE, Australian Mineral Statistics (quarterly journal). Australian Bureau of Agricultural and Resource Economics (ABARE; now Australian Bureau of Agricultural and Resource Economics & Sciences), Canberra, ACT, Australia, Years 1988 to 2011.
+* ABARE, Australian Commodity Statistics (annual series). Australian Bureau of Agricultural and Resource Economics (ABARE; now Australian Bureau of Agricultural and Resource Economics & Sciences), Canberra, ACT, Australia, Years 1995 to 2010 (formerly Commodity Statistical Bulletin, 1986-1994).
+
+<br>
+
+### Data cleaning to report on less common elements
+
+* "Rare Earths" (HZ8:IA:8)
+* Garnet (JD8:JE8)
+* Rutile (LC8:LD8) is $TiO_2$ most commonly used in sunscreens and smelting Titanium metal^[<https://en.wikipedia.org/wiki/Rutile> ].
+* Synthetic Rutile (LH8, LJ8) from WA only (no 'Australia' columns); it's typically made from Ilmenite.
+
+I skipped the following due to missing price data or limited volume data
+* "Platinum Group Elements by Individual Element" (HO8:HT8) would be the best set of columns to use for PGEs, however there is no pricing data. Note that some have not been mined since the 1950s
+* Niobium (IU8) ( there is no price column)
+* admium (IZ8) ( there is no price column and not mined since 2004)
+* Zircon there os no $/t for all of Australia, and data is incomplete; prices diverge signficantly in the various states
+* Bismuth (not mined since 1984)
 
 <br>
 

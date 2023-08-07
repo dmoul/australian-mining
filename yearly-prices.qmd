@@ -61,7 +61,7 @@ dta_yearly_long |>
 
 <br>
 
-But after adjusting for inflation (using constant 2021 dollars) we can see that commodity prices generally are not near their peak, and some prices have been in long-term decline (Tungsten, Alumina, and Bauxite).
+However, after adjusting for inflation (using constant 2021 dollars) we can see that commodity prices generally are not near their peak, and some prices have been in long-term decline, for example: Tungsten, Alumina, and Bauxite.
 
 ::: {.callout-note}
 For this reason, all plots starting with this one use constant 2021 dollars.
@@ -93,7 +93,7 @@ dta_yearly_long |>
   facet_wrap(~ product_price, scales = "free_y") +
   labs(
     title = glue("Australian mining prices (2021 dollars)"),
-    subtitle = "Highest to lowest volumne",
+    subtitle = "Highest to lowest prices",
     x = NULL,
     y = "AUD (2021 dollars) Y axis scale varies",
     caption = my_caption
@@ -105,7 +105,7 @@ dta_yearly_long |>
 
 ## Price by production volume
 
-Does production volume go up when prices go up (mine owners are more motivated to produce more, or it becomes economical to mine previously marginal deposits)? Or do prices go down when volume goes up (perhaps demand is satisfied, leading to lower prices)? The answer appears to be mixed. For some (Gold, Lithium, Chromium, Iron ore) demand and production volume have been positively correlated in recent years. Some are negatively correlated (Uranium, Bauxite).
+Does production volume go up when prices go up (mine owners are more motivated to produce more, or it becomes economical to mine previously marginal deposits)? Or do prices go down when volume goes up (perhaps demand is satisfied, leading to lower prices)? The answer is mixed. Gold, Lithium, Chromium, and Iron ore demand and production volume have been positively correlated in recent years. Uranium and Bauxite demand and production volume have been negatively correlated.
 
 ```{r, fig.height=10, fig.width=14}
 #| label: fig-price-by-volume-2021-dollars

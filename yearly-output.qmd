@@ -18,22 +18,13 @@ peak_price_cutoff <- 0.9 # at least this much of amount_max to be considered pea
 
 ```
 
-There is great variation in the amount of commodity production both over time and among the commodities. These dynamics are the focus of this chapter. Most mass units are metric tonnes (t). Gold and silver are measured in kg, and diamonds are measured in carets.
+There is great variation in the amount produced both over time and among the commodities. These dynamics are the focus of this chapter. Most mass units are metric tonnes (t). Gold and silver are measured in kg, and diamonds are measured in carets.
 
 <br>
 
 ## Contributions in 2021 to total amount extracted
 
-In @fig-amount-2021 I use a log scale on the left plot, since the range is very wide.
-
-```{r, fig.height=7, fig.width=7}
-#| label: fig-amount-2021
-#| fig-cap: "Amount extracted in 2021"
-#| fig-width: 7
-#| fig-height: 7
-
-##| column: page-inset-right
-
+```{r}
 product_levels <- dta_yearly_long |>
   filter(year == 2021,
          !is.na(mass)) |>
@@ -41,21 +32,36 @@ product_levels <- dta_yearly_long |>
             by = product_mass) |>
   arrange(mass)
 
-dta_yearly_long |>
+data_for_plot <- dta_yearly_long |>
   filter(year == 2021) |>
+  select(year, mass, product_mass) |>
   inner_join(product_levels |> select(product_mass),
              by = "product_mass") |>
-  mutate(product_mass = factor(product_mass, levels = product_levels$product_mass)) |>
+  mutate(product_mass = factor(product_mass, levels = product_levels$product_mass)) 
+
+powers_of_ten <- round(log10(max(data_for_plot$mass) / min(data_for_plot$mass)))
+
+```
+
+In @fig-amount-2021 the range of output varies by `r powers_of_ten` powers of 10: from `r comma(round(min(data_for_plot$mass)))` to `r comma(round(max(data_for_plot$mass)))`.
+
+```{r, fig.height=10, fig.width=10}
+#| label: fig-amount-2021
+#| fig-cap: "Amount extracted in 2021"
+#| fig-width: 10
+#| fig-height: 10
+#| column: page-inset-right
+
+data_for_plot |>
   ggplot(aes(year, mass, label = product_mass, color = product_mass)) +
   geom_label_repel(na.rm = TRUE, show.legend = FALSE,
-                   direction = "x", min.segment.length = 10000,
-                   max.overlaps = 10, max.iter = 10000) +
+                   direction = "x", min.segment.length = 100000,
+                   max.overlaps = 10, max.iter = 100000) +
   scale_x_continuous(breaks = c(1900, 1950, 2000)) +
   scale_y_log10(labels = label_number(scale_cut = cut_short_scale()),
   ) +
   labs(
     title = 'Australian mine output in 2021',
-    #subtitle = glue("Relative commodity amount"),
     x = NULL,
     y = "Amount (log10 scale)",
     caption = my_caption
@@ -113,7 +119,7 @@ Some observations:
 * It's distressing in these days of global warming that black coal production is near its peak. According to Geosciences Australia, a government agency, Japan is the the destination of more Australian coal then any other country, followed by China (assuming post-COVID-19 industrial activity returns to trend), then India, South Korea, and Taiwan. See Figure 9^[
 <https://www.ga.gov.au/digital-publication/aecr2022/coal> ].
 * The main use of Bauxite and Alumina is in aluminium smelting. Another name for alumina is [aluminium oxide](https://en.wikipedia.org/wiki/Aluminium_oxide) ($Al_2O_3$) and Aluminium(III) oxide^[<https://www.britannica.com/science/alumina> ]. In North American English *aluminium* is *aluminum*.
-* Given the insatiable demand for batteries, it's not surprising that lithium mining has increased dramatically over the last 30-40 years.
+* Given the insatiable demand for batteries and magnets for electric vehicles and other electronic applications, it's not surprising that mining of lithium and rare earth elements has increased dramatically over the last 30-40 years.
 
 ```{r, fig.height=6, fig.width=8}
 #| label: fig-output-yearly-at-peak
